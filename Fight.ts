@@ -42,10 +42,8 @@ export default class Fight {
 
     fight() {
         while (!this.isFinished) {
-            console.log('New round!');
             for (let i = 0; i < this.order.length; i++) {
                 const character = this.order[i];
-                console.log(`It's ${character.name}'s turn!`);
                 if (this.team1Win(this.team1, this.team2)) {
                     console.log('Team 1 wins!');
                     this.isFinished = true;
@@ -71,20 +69,6 @@ export default class Fight {
                 }
             }
         }
-
-
     }
 }
-
-
-const character1 = new Character('Warrior', 10, 5, 5, 100, 100);
-const character2 = new Character('Mage', 5, 2, 10, 50, 50);
-const character3 = new Character('Archer', 7, 3, 7, 70, 70);
-const character4 = new Character('Healer', 3, 1, 3, 30, 30);
-const team1 = [character1, character2];
-const team2 = [character3, character4];
-
-const fight = new Fight(team1, team2);
-fight.fight();
-
 

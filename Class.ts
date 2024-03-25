@@ -1,17 +1,19 @@
 import Character from "./Character.ts";
 
-class Warrior extends Character {
-    constructor (name : string, physicalAttack : number, physicalDefense : number, speed : number, maxHP : number, currentHP : number) {
+export class Warrior extends Character {
+    constructor (physicalAttack : number, physicalDefense : number, speed : number, maxHP : number, currentHP : number) {
+        const name = "Warrior";
         super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
     }
 };
 
-class Mage extends Character {
+export class Mage extends Character {
     magicAttack : number;
     maxMana : number;
     currentMana : number;
 
-    constructor (name : string, physicalAttack : number, physicalDefense : number, speed : number, maxHP : number, currentHP : number, magicAttack : number, maxMana : number, currentMana : number) {
+    constructor (physicalAttack : number, physicalDefense : number, speed : number, maxHP : number, currentHP : number, magicAttack : number, maxMana : number, currentMana : number) {
+        const name = "Mage";
         super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
         this.magicAttack = magicAttack;
         this.maxMana = maxMana;
@@ -20,6 +22,7 @@ class Mage extends Character {
 
     magicAtk(phyAtk : number, currentHPennemy : number) : number {
         const atk = phyAtk
+        this.currentMana -= 20
         if (atk < 0) {
             return 0
         } else if (currentHPennemy - atk < 0) {
@@ -30,8 +33,9 @@ class Mage extends Character {
     }
 };
 
-class Paladin extends Character {
-    constructor (name : string, physicalAttack : number, physicalDefense : number, speed : number, maxHP : number, currentHP : number) {
+export class Paladin extends Character {
+    constructor (physicalAttack : number, physicalDefense : number, speed : number, maxHP : number, currentHP : number) {
+        const name = "Paladin";
         super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
     }
 
@@ -47,8 +51,9 @@ class Paladin extends Character {
     }
 };
 
-class Barbarian extends Character {
-    constructor (name : string, physicalAttack : number, physicalDefense : number, speed : number, maxHP : number, currentHP : number) {
+export class Barbarian extends Character {
+    constructor (physicalAttack : number, physicalDefense : number, speed : number, maxHP : number, currentHP : number) {
+        const name = "Barbarian";
         super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
     }
 
@@ -64,8 +69,9 @@ class Barbarian extends Character {
     }
 };
 
-class Priest extends Character {
-    constructor (name : string, physicalAttack : number, physicalDefense : number, speed : number, maxHP : number, currentHP : number) {
+export class Priest extends Character {
+    constructor (physicalAttack : number, physicalDefense : number, speed : number, maxHP : number, currentHP : number) {
+        const name = "Priest";
         super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
     }
 
@@ -80,8 +86,9 @@ class Priest extends Character {
     }
 };
 
-class Thief extends Character {
-    constructor (name : string, physicalAttack : number, physicalDefense : number, speed : number, maxHP : number, currentHP : number) {
+export class Thief extends Character {
+    constructor (physicalAttack : number, physicalDefense : number, speed : number, maxHP : number, currentHP : number) {
+        const name = "Thief";
         super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
     }
 
@@ -90,10 +97,15 @@ class Thief extends Character {
     }
 };
 
-class Monster extends Character {
-
+export class Monster extends Character {
+    constructor (physicalAttack : number, physicalDefense : number, speed : number, maxHP : number, currentHP : number) {
+        const monsterName = ["Goblin", "Orc", "Troll", "Dragon", "Wyvern", "Giant", "Golem", "Slime", "Skeleton", "Zombie"];
+        const randomName = Math.floor(Math.random() * monsterName.length);
+        name = monsterName[randomName];
+        super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
+    }
 };
 
-class Boss extends Character {
+export class Boss extends Character {
 
 };
