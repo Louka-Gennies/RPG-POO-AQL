@@ -1,5 +1,13 @@
-import {Warrior, Mage, Paladin, Barbarian, Priest, Thief, Monster} from './Class.ts'
-import Fight from './Fight.ts'
+import {
+  Barbarian,
+  Mage,
+  Monster,
+  Paladin,
+  Priest,
+  Thief,
+  Warrior,
+} from "./Class.ts";
+import Fight from "./Fight.ts";
 
 const character1 = new Warrior(10, 5, 5, 100, 100);
 const character2 = new Mage(5, 2, 10, 50, 50, 10, 60, 60);
@@ -13,4 +21,3 @@ const enemies = [monster1, monster2, monster3];
 
 const room = new Fight(allies, enemies);
 room.fight();
-
