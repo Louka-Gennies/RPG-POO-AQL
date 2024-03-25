@@ -1,24 +1,32 @@
 export default class Menu {
-    questions : string[];
-    choices: string[][];
-    answers : number;
+    question: string;
+    possibilities: string[];
 
-    constructor (questions : string[], choices: string[][], answers : number) {
-        this.questions = questions;
-        this.choices = choices;
-        this.answers = answers;
+    constructor(question: string, possibilities: string[]) {
+        this.question = question;
+        this.possibilities = possibilities;
     }
 
-    async askQuestion() : Promise<number> {
-        console.log(this.questions[this.answers]);
-        this.choices[this.answers].forEach((choice, index) => {
-            console.log(`${index + 1}. ${choice}`);
-        });
-        for await (const line of Deno.iter(Deno.stdin)) {
-            const answer = parseInt(new TextDecoder().decode(line));
-            console.log(`You selected: ${this.choices[this.answers][answer - 1]}`);
-            return answer;
-        }
-        return 0;
+    askQuestion(): void {
+    let question = this.question + "\n";
+    for (let i = 0; i < this.possibilities.length; i++) {
+        question += `${i + 1}. ${this.possibilities[i]}\n`;
     }
+    console.clear();
+    const userInput = prompt(question + "Choose a number between 1 and " + this.possibilities.length + " : ");
+    if (userInput === null) {
+        console.log("you have to choose a number");
+        console.clear();
+        this.askQuestion();
+    } else if (parseInt(userInput) > this.possibilities.length || parseInt(userInput) < 1) {
+        console.clear();
+        console.log("you have to choose a number between 1 and " + this.possibilities.length,);
+        this.askQuestion();
+    } else {
+        console.log("you chose " + this.possibilities[parseInt(userInput) - 1]);
+    }
+  }
 }
+
+const menu = new Menu("What is your favorite color?", ["Red", "Blue", "Green", "Yellow"]);
+menu.askQuestion();
