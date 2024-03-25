@@ -4,6 +4,7 @@ export default class Fight {
     team1 : Character[];
     team2 : Character[];
     order : Character[];
+    isFinished : boolean = false;
 
     constructor(team1 : Character[], team2 : Character[]) {
         this.team1 = team1;
@@ -16,13 +17,74 @@ export default class Fight {
         order.sort((a, b) => b.speed - a.speed);
         return order;
     }
-    isAlive(team1 : Character[], team2 : Character[]) {
-        if (team1[0].currentHP <= 0 || team2[0].currentHP <= 0) {
+
+    isAlive (char : Character) {
+        if (char.currentHP <= 0) {
             return false;
+        } else {
+            return true;
         }
     }
-    
-        
+
+    team1Win(team1 : Character[], team2 : Character[]) {
+        return team1.length > 0 && team2.length === 0;
+    }
+
+    team2Win(team1 : Character[], team2 : Character[]) {
+        return team1.length === 0 && team2.length > 0;
+    }
+    characterDeath(character : Character, team : Character[]) {
+        const index = team.indexOf(character);
+        team.splice(index, 1);
+    }
 
 
+
+    fight() {
+        while (!this.isFinished) {
+            console.log('New round!');
+            for (let i = 0; i < this.order.length; i++) {
+                const character = this.order[i];
+                console.log(`It's ${character.name}'s turn!`);
+                if (this.team1Win(this.team1, this.team2)) {
+                    console.log('Team 1 wins!');
+                    this.isFinished = true;
+                    break;
+                } else if (this.team2Win(this.team1, this.team2)) {
+                    console.log('Team 2 wins!');
+                    this.isFinished = true;
+                    break;
+                }
+
+                if (this.isAlive(character)) {
+                    const target = this.team1.includes(character) ? this.team2 : this.team1;
+                    const targetIndex = Math.floor(Math.random() * target.length);
+                    const targetCharacter = target[targetIndex];
+                    const damage = character.attack(character.physicalAttack, targetCharacter.physicalDefense, targetCharacter.currentHP);
+                    targetCharacter.currentHP -= damage;
+                    console.log(character.stat(character));
+                    console.log(targetCharacter.stat(targetCharacter));
+                    console.log(`${character.name} attacked ${targetCharacter.name} for ${damage} damage!`);
+                    if (targetCharacter.currentHP <= 0) {
+                        this.characterDeath(targetCharacter, target);
+                    }
+                }
+            }
+        }
+
+
+    }
 }
+
+
+const character1 = new Character('Warrior', 10, 5, 5, 100, 100);
+const character2 = new Character('Mage', 5, 2, 10, 50, 50);
+const character3 = new Character('Archer', 7, 3, 7, 70, 70);
+const character4 = new Character('Healer', 3, 1, 3, 30, 30);
+const team1 = [character1, character2];
+const team2 = [character3, character4];
+
+const fight = new Fight(team1, team2);
+fight.fight();
+
+
