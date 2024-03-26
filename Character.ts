@@ -54,11 +54,18 @@ export default class Character {
     const hpPerBar = character.maxHP / totalBars;
     const filledBars = Math.round(character.currentHP / hpPerBar);
     const emptyBars = totalBars - filledBars;
-    const filledBarsString = chalk.green("\u2588".repeat(filledBars));
-    const emptyBarsString = "\u2591".repeat(emptyBars);
-    const hpBar =
-      `HP: [${filledBarsString}${emptyBarsString}] (${character.currentHP}/${character.maxHP})`;
-
-    return `${character.name}\n${hpBar}\n`;
+    let filledBarsString = "";
+    if (filledBars <= 5) {
+      filledBarsString = chalk.hex("#FF3333")("\u2588".repeat(filledBars));
+    } else if (filledBars <= 10) {
+      filledBarsString = chalk.hex("#FF9933")("\u2588".repeat(filledBars));
+    } else if (filledBars <= 15) {
+      filledBarsString = chalk.hex("#FFFF33")("\u2588".repeat(filledBars));
+    } else {
+      filledBarsString = chalk.hex("#33FF33")("\u2588".repeat(filledBars));
+    }
+    const emptyBarsString = chalk.gray("\u2588".repeat(emptyBars));
+    const hpBar = `${this.name} HP: [${filledBarsString}${emptyBarsString}] (${character.currentHP}/${character.maxHP})`;
+    return `${hpBar}\n`;
   }
 }

@@ -43,11 +43,11 @@ export default class Fight {
       for (let i = 0; i < this.order.length; i++) {
         const character = this.order[i];
         if (this.team1Win(this.team1, this.team2)) {
-          console.log("Team 1 wins!");
+          console.log("You win! All enemies are defeated.");
           this.isFinished = true;
           break;
         } else if (this.team2Win(this.team1, this.team2)) {
-          console.log("Team 2 wins!");
+          console.log("You lose... all your heroes are dead.");
           this.isFinished = true;
           break;
         }
