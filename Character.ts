@@ -25,19 +25,20 @@ export default class Character {
     this.currentHP = currentHP;
   }
 
-  attack(phyAtk: number, phyDef: number, enemies : Character[]): number {
+  attack(enemies : Character[]): number {
+    const phyAtk = this.physicalAttack;
     const enemyNames = enemies.map((enemy) => `${enemy.name}`);
     const menu = new Menu("Choose a target: ", enemyNames);
     const target = menu.askQuestion();
-    const targetIndex = parseInt(target) - 1;
+    const phyDef = enemies[target].physicalDefense;
     const atk = phyAtk - phyDef;
     if (atk < 0) {
       return 0;
-    } else if (enemies[targetIndex].currentHP - atk < 0) {
-      enemies[targetIndex].currentHP = 0;
-      return enemies[targetIndex].currentHP;
+    } else if (enemies[target].currentHP - atk < 0) {
+      enemies[target].currentHP = 0;
+      return enemies[target].currentHP;
     } else {
-      enemies[targetIndex].currentHP -= atk;
+      enemies[target].currentHP -= atk;
       return atk;
     }
   }
@@ -76,3 +77,44 @@ export default class Character {
     return `${hpBar}\n`;
   }
 }
+
+const warrior = new Character("hero", 10, 1, 10, 100, 100);
+const warrior2 = new Character("hero2", 10, 1, 10, 100, 100);
+console.log(warrior.stat(warrior));
+console.log(warrior2.stat(warrior2));
+const monster1 = new Character("skeleton", 10, 1, 10, 100, 100);
+const monster2 = new Character("zombie", 10, 1, 10, 100, 100);
+const monster3 = new Character("slime", 10, 1, 10, 100, 100);
+const monsterGroup = [monster1, monster2, monster3];
+const heroes = [warrior, warrior2];
+console.log(monster1.stat(monster1));
+console.log(monster2.stat(monster2));
+console.log(monster3.stat(monster3));
+warrior.attack(monsterGroup);
+console.log(monster1.stat(monster1));
+console.log(monster2.stat(monster2));
+console.log(monster3.stat(monster3));
+warrior.attack(monsterGroup);
+console.log(monster1.stat(monster1));
+console.log(monster2.stat(monster2));
+console.log(monster3.stat(monster3));
+warrior.attack(monsterGroup);
+console.log(monster1.stat(monster1));
+console.log(monster2.stat(monster2));
+console.log(monster3.stat(monster3));
+
+monster1.attack(heroes);
+console.log(warrior.stat(warrior));
+console.log(warrior2.stat(warrior2));
+monster1.attack(heroes);
+console.log(warrior.stat(warrior));
+console.log(warrior2.stat(warrior2));
+monster1.attack(heroes);
+console.log(warrior.stat(warrior));
+console.log(warrior2.stat(warrior2));
+monster1.attack(heroes);
+console.log(warrior.stat(warrior));
+console.log(warrior2.stat(warrior2));
+
+
+

@@ -7,7 +7,7 @@ export default class Menu {
     this.possibilities = possibilities;
   }
 
-  askQuestion(): string {
+  askQuestion(): number {
     let question = this.question + "\n";
     for (let i = 0; i < this.possibilities.length; i++) {
       question += `${i + 1}. ${this.possibilities[i]}\n`;
@@ -29,7 +29,7 @@ export default class Menu {
       return this.askQuestion();
     } else {
       console.log("you chose " + this.possibilities[parseInt(userInput) - 1]);
-      return this.possibilities[parseInt(userInput) - 1];
+      return parseInt(userInput) - 1;
     }
   }
 }
