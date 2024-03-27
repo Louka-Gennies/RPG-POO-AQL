@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import Menu from "./Menu.ts"
 
 export default class Character {
   name: string;
@@ -24,13 +25,19 @@ export default class Character {
     this.currentHP = currentHP;
   }
 
-  attack(phyAtk: number, phyDef: number, currentHPennemy: number): number {
+  attack(phyAtk: number, phyDef: number, enemies : Character[]): number {
+    const enemyNames = enemies.map((enemy) => `${enemy.name}`);
+    const menu = new Menu("Choose a target: ", enemyNames);
+    const target = menu.askQuestion();
+    const targetIndex = parseInt(target) - 1;
     const atk = phyAtk - phyDef;
     if (atk < 0) {
       return 0;
-    } else if (currentHPennemy - atk < 0) {
-      return currentHPennemy;
+    } else if (enemies[targetIndex].currentHP - atk < 0) {
+      enemies[targetIndex].currentHP = 0;
+      return enemies[targetIndex].currentHP;
     } else {
+      enemies[targetIndex].currentHP -= atk;
       return atk;
     }
   }

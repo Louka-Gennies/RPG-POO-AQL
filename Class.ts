@@ -1,4 +1,5 @@
 import Character from "./Character.ts";
+import Menu from "./Menu.ts";
 
 export class Warrior extends Character {
   constructor(
@@ -179,21 +180,26 @@ export class Monster extends Character {
     name = monsterName[randomName];
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
-  attack(phyAtk: number, phyDef: number, currentHPennemy: number, team : Character[]): number {
-    const chance = Math.random();
-  
-    if (chance <= 0.2) {
-      let weakest = team[0];
-      for (let i = 1; i < team.length; i++) {
-        if (team[i].currentHP < weakest.currentHP) {
-          weakest = team[i];
-        }
-      }
-      let atk = phyAtk - weakest.phyDef;
+
+  attack(phyAtk: number, phyDef: number, enemies : Character[]): number {
+    let targetIndex;
+    if (Math.random() < 0.8) {
+      const enemyNames = enemies.map((enemy) => `${enemy.name}`);
+      const menu = new Menu("Choose a target: ", enemyNames);
+      const target = menu.askQuestion();
+      targetIndex = parseInt(target) - 1;
     } else {
-      const randomIndex = Math.floor(Math.random() * team.length);
-      let randomAdventurer = team[randomIndex];
-      let atk = phyAtk - randomAdventurer.phyDef;
+      targetIndex = enemies.reduce((lowest, enemy, index) => enemy.currentHP < enemies[lowest].currentHP ? index : lowest, 0);
+    }
+    const atk = phyAtk - enemies[targetIndex].physicalDefense;
+    if (atk < 0) {
+      return 0;
+    } else if (enemies[targetIndex].currentHP - atk < 0) {
+      enemies[targetIndex].currentHP = 0;
+      return enemies[targetIndex].currentHP;
+    } else {
+      enemies[targetIndex].currentHP -= atk;
+      return atk;
     }
   }
 }
@@ -221,5 +227,44 @@ export class Boss extends Character {
     const randomName = Math.floor(Math.random() * monsterName.length);
     name = monsterName[randomName];
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
+  }
+
+  attack(phyAtk: number, phyDef: number, enemies : Character[]): number {
+    let targetIndex;
+    if (Math.random() < 0.7) {
+      if (Math.random() < 0.8) {
+        const enemyNames = enemies.map((enemy) => `${enemy.name}`);
+        const menu = new Menu("Choose a target: ", enemyNames);
+        const target = menu.askQuestion();
+        targetIndex = parseInt(target) - 1;
+      } else {
+        targetIndex = enemies.reduce((lowest, enemy, index) => enemy.currentHP < enemies[lowest].currentHP ? index : lowest, 0);
+      }
+      const atk = phyAtk - enemies[targetIndex].physicalDefense;
+      if (atk < 0) {
+        return 0;
+      } else if (enemies[targetIndex].currentHP - atk < 0) {
+        enemies[targetIndex].currentHP = 0;
+        return enemies[targetIndex].currentHP;
+      } else {
+        enemies[targetIndex].currentHP -= atk;
+        return atk;
+      }
+    } else {
+      let atkTotal = 0;
+      for (let i = 0; i < enemies.length; i++) {
+        const atk = phyAtk - enemies[i].physicalDefense;
+        if (atk < 0) {
+          return 0;
+        } else if (enemies[i].currentHP - atk < 0) {
+          enemies[i].currentHP = 0;
+          atkTotal += enemies[i].currentHP;
+        } else {
+          enemies[i].currentHP -= atk;
+          atkTotal += atk;
+        }
+      }
+      return atkTotal;
+    }
   }
 }
