@@ -136,7 +136,22 @@ export class Thief extends Character {
   }
 
   steal(): void {
-    console.log("You stole 10 golds");
+    const item = Math.random() * 10;
+    if (item <= 5) {
+      console.log("You stole an half star");
+    }
+    else if (item > 5 && item <= 15) {
+      console.log("You stole an éther");
+    }
+    else if (item > 15 && item <= 30) {
+      console.log("You stole an star fragment");
+    }
+    else if (item > 30 && item <= 60) {
+      console.log("You stole an potion");
+    }
+    else {
+      console.log("You stole nothing");
+    }
   }
 }
 
