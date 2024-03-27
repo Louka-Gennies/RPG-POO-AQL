@@ -199,10 +199,26 @@ export class Boss extends Character {
       "Golem",
       "Slime",
       "Skeleton",
-      "Zombie",
+      "Guillaume",
     ];
     const randomName = Math.floor(Math.random() * monsterName.length);
     name = monsterName[randomName];
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
+  }
+  bossAttack(phyAtk: number, phyDef: number, currentHPennemy: number): number {
+    const group = Math.random();
+    if (group <= 30) {
+      return this.bossAttackSingle(phyAtk, phyDef, currentHPennemy);
+    } else {
+      return this.bossAttackGroup(phyAtk, phyDef, currentHPennemy);
+    }
+    const bossAttackGroup = phyAtk - phyDef;
+    if (atk < 0) {
+      return 0;
+    } else if (currentHPennemy - atk < 0) {
+      return currentHPennemy;
+    } else {
+      return atk;
+    }
   }
 }
