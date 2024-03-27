@@ -185,10 +185,7 @@ export class Monster extends Character {
     let targetIndex;
     const phyAtk = this.physicalAttack;
     if (Math.random() < 0.8) {
-      const enemyNames = enemies.map((enemy) => `${enemy.name}`);
-      const menu = new Menu("Choose a target: ", enemyNames);
-      const target = menu.askQuestion();
-      targetIndex = target;
+      targetIndex = Math.floor(Math.random() * enemies.length);
     } else {
       targetIndex = enemies.reduce((lowest, enemy, index) => enemy.currentHP < enemies[lowest].currentHP ? index : lowest, 0);
     }
@@ -235,10 +232,7 @@ export class Boss extends Character {
     const phyAtk = this.physicalAttack;
     if (Math.random() < 0.7) {
       if (Math.random() < 0.8) {
-        const enemyNames = enemies.map((enemy) => `${enemy.name}`);
-        const menu = new Menu("Choose a target: ", enemyNames);
-        const target = menu.askQuestion();
-        targetIndex = target;
+        targetIndex = Math.floor(Math.random() * enemies.length);
       } else {
         targetIndex = enemies.reduce((lowest, enemy, index) => enemy.currentHP < enemies[lowest].currentHP ? index : lowest, 0);
       }
@@ -270,14 +264,3 @@ export class Boss extends Character {
     }
   }
 }
-
-const warrior = new Warrior(10, 10, 10, 100, 100);
-console.log(warrior.stat(warrior));
-const monstre1 = new Monster(10, 0, 10, 100, 100);
-const monstre2 = new Monster(10, 0, 10, 100, 100);
-const monstre3 = new Monster(10, 0, 10, 100, 100);
-const monsterGroup = [monstre1, monstre2, monstre3];
-console.log(monstre1.stat(monstre1));
-console.log(monstre2.stat(monstre2));
-console.log(monstre3.stat(monstre3));
-warrior.attack(monsterGroup);
