@@ -182,4 +182,27 @@ export class Monster extends Character {
 }
 
 export class Boss extends Character {
+  constructor(
+    physicalAttack: number,
+    physicalDefense: number,
+    speed: number,
+    maxHP: number,
+    currentHP: number,
+  ) {
+    const monsterName = [
+      "Goblin",
+      "Orc",
+      "Troll",
+      "Dragon",
+      "Wyvern",
+      "Giant",
+      "Golem",
+      "Slime",
+      "Skeleton",
+      "Zombie",
+    ];
+    const randomName = Math.floor(Math.random() * monsterName.length);
+    name = monsterName[randomName];
+    super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
+  }
 }
