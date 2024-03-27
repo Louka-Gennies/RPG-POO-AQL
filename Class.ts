@@ -179,6 +179,23 @@ export class Monster extends Character {
     name = monsterName[randomName];
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
+  attack(phyAtk: number, phyDef: number, currentHPennemy: number, team : Character[]): number {
+    const chance = Math.random();
+  
+    if (chance <= 0.2) {
+      let weakest = team[0];
+      for (let i = 1; i < team.length; i++) {
+        if (team[i].currentHP < weakest.currentHP) {
+          weakest = team[i];
+        }
+      }
+      let atk = phyAtk - weakest.phyDef;
+    } else {
+      const randomIndex = Math.floor(Math.random() * team.length);
+      let randomAdventurer = team[randomIndex];
+      let atk = phyAtk - randomAdventurer.phyDef;
+    }
+  }
 }
 
 export class Boss extends Character {

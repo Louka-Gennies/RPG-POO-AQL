@@ -66,9 +66,7 @@ export default class Fight {
           targetCharacter.currentHP -= damage;
           console.log(character.stat(character));
           console.log(targetCharacter.stat(targetCharacter));
-          console.log(
-            `${character.name} attacked ${targetCharacter.name} for ${damage} damage!`,
-          );
+          console.log(`${character.name} attacked ${targetCharacter.name} for ${damage} damage!`,);
           if (targetCharacter.currentHP <= 0) {
             this.characterDeath(targetCharacter, target);
           }
