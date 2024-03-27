@@ -73,7 +73,7 @@ export default class Character {
       filledBarsString = chalk.hex("#33FF33")("\u2588".repeat(filledBars));
     }
     const emptyBarsString = chalk.gray("\u2588".repeat(emptyBars));
-    const hpBar = `${this.name} HP: [${filledBarsString}${emptyBarsString}] (${character.currentHP}/${character.maxHP})`;
+    const hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${character.currentHP}/${character.maxHP})`;
     return `${hpBar}\n`;
   }
 }

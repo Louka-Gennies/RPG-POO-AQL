@@ -1,5 +1,4 @@
 import Character from "./Character.ts";
-import Menu from "./Menu.ts";
 
 export class Warrior extends Character {
   constructor(
