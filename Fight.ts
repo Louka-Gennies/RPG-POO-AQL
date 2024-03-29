@@ -37,6 +37,11 @@ export default class Fight {
     const index = team.indexOf(character);
     team.splice(index, 1);
   }
+  displayMenu() {
+    console.log("1. Attack");
+    console.log("2. Special attack");
+    console.log("3. Use item");
+  }
 
   fight() {
     while (!this.isFinished) {
@@ -51,26 +56,12 @@ export default class Fight {
           this.isFinished = true;
           break;
         }
-
-        if (this.isAlive(character)) {
-          const target = this.team1.includes(character)
-            ? this.team2
-            : this.team1;
-          const targetIndex = Math.floor(Math.random() * target.length);
-          const targetCharacter = target[targetIndex];
-          const damage = character.attack(
-            character.physicalAttack,
-            targetCharacter.physicalDefense,
-            targetCharacter.currentHP,
-          );
-          targetCharacter.currentHP -= damage;
-          console.log(character.stat(character));
-          console.log(targetCharacter.stat(targetCharacter));
-          console.log(`${character.name} attacked ${targetCharacter.name} for ${damage} damage!`,);
-          if (targetCharacter.currentHP <= 0) {
-            this.characterDeath(targetCharacter, target);
-          }
-        }
+        const choice = ["attack", "special attack", "use item"];
+        const menu = new Menu("Choose an action: ", choice);
+        const action = menu.askQuestion();
+        switch (action) {
+            case 0:
+                
       }
     }
   }
