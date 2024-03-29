@@ -28,9 +28,10 @@ export default class Menu {
       );
       return this.askQuestion();
     } else {
-      console.log("you chose " + this.possibilities[parseInt(userInput) - 1]);
+      console.log("you choose " + this.possibilities[parseInt(userInput) - 1]);
       return parseInt(userInput) - 1;
     }
   }
-}
+};
+
 
