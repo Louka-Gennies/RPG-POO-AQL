@@ -35,7 +35,7 @@ export class Mage extends Character {
     this.currentMana = currentMana;
   }
 
-  magicAtk(phyAtk: number, currentHPennemy: number): number {
+  specialAttack(phyAtk: number, currentHPennemy: number): number {
     const atk = phyAtk;
     this.currentMana -= 20;
     if (atk < 0) {
@@ -60,7 +60,7 @@ export class Paladin extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  holyAttack(phyAtk: number, phyDef: number, currentHPennemy: number): number {
+  specialAttack(phyAtk: number, phyDef: number, currentHPennemy: number): number {
     const atk = phyAtk - phyDef;
     if (atk < 0) {
       return 0;
@@ -84,7 +84,7 @@ export class Barbarian extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  berserkAttack(
+  specialAttack(
     phyAtk: number,
     phyDef: number,
     currentHPennemy: number,
@@ -112,7 +112,7 @@ export class Priest extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  healSpell(maxHP: number, currentHP: number): number {
+  specialAttack(maxHP: number, currentHP: number): number {
     const addHP = (maxHP / 100) * 25;
     const health = currentHP + addHP;
     if (health > maxHP) {
@@ -135,7 +135,7 @@ export class Thief extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  steal(): void {
+  specialAttack(): void {
     const item = Math.random() * 10;
     if (item <= 5) {
       console.log("You stole an half star");
