@@ -68,10 +68,10 @@ export default class Character {
     const menu = new Menu("Choose an item: ", choices);
     return menu.askQuestion();
   }
-  showHp(character: Character): string {
+  showHp(): string {
     const totalBars = 20;
-    const hpPerBar = character.maxHP / totalBars;
-    const filledBars = Math.round(character.currentHP / hpPerBar);
+    const hpPerBar = this.maxHP / totalBars;
+    const filledBars = Math.round(this.currentHP / hpPerBar);
     const emptyBars = totalBars - filledBars;
     let filledBarsString = "";
     if (filledBars <= 5) {
@@ -84,7 +84,7 @@ export default class Character {
       filledBarsString = chalk.hex("#33FF33")("\u2588".repeat(filledBars));
     }
     const emptyBarsString = chalk.gray("\u2588".repeat(emptyBars));
-    const hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${character.currentHP}/${character.maxHP})`;
-    return `${hpBar}\n`;
+    const hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
+    return `${hpBar}`;
   }
 }

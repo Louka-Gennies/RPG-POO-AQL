@@ -10,10 +10,29 @@ import {
 } from "./Class.ts";
 import Fight from "./Fight.ts";
 import Menu from "./Menu.ts";
+import chalk from "chalk";
 
 class gameManager {
   constructor() {
     console.log("Game Manager Created");
+  }
+
+  stats(allies : Character[], monsters : Character[]) {
+    let maxLineLen = 0;
+    for (let i = 0; i < allies.length; i++) {
+      if (allies[i].showHp().length > maxLineLen) {
+        maxLineLen = allies[i].showHp().length;
+      }
+    }
+    console.log(chalk.hex("#1a67ed")("Heroes :") + " ".repeat(maxLineLen - 20) + chalk.hex("#db2323")("Monsters :"));
+    for (let i = 0; i < allies.length; i++) {
+      let formatLine = allies[i].showHp();
+      if (allies[i].showHp().length != maxLineLen) {
+        const spaces = maxLineLen - allies[i].showHp().length;
+        formatLine += " ".repeat(spaces);
+      }
+      console.log(formatLine + " ".repeat(10) + monsters[i].showHp());
+    }
   }
 
   async startGame() {
@@ -40,7 +59,7 @@ class gameManager {
     while (allies.length < 3) {
       console.log("Your Team:\n");
       for (let i = 0; i < allies.length; i++) {
-        console.log(`${i + 1}. ` + allies[i].showHp(allies[i]));
+        console.log(`${i + 1}. ` + allies[i].showHp() + `\n`);
       }
       const charChoice = new Menu("Choose your character: ", alliesChoice);
       const response = charChoice.askQuestion();
@@ -126,6 +145,16 @@ class gameManager {
       }
       console.clear();
     }
+    console.log("Your Team:\n");
+    for (let i = 0; i < allies.length; i++) {
+      console.log(`${i + 1}. ` + allies[i].showHp() + `\n`);
+    }
+    await new Promise((r) => setTimeout(r, 1000));
+    console.clear();
+    console.log("Start of the fight !!!");
+    await new Promise((r) => setTimeout(r, 1000));
+    console.clear();
+    this.stats(allies, monsters);
   }
 }
 

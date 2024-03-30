@@ -57,12 +57,6 @@ export default class Fight {
           this.isFinished = true;
           break;
         }
-        const choice = ["attack", "special attack", "use item"];
-        const menu = new Menu("Choose an action: ", choice);
-        const action = menu.askQuestion();
-        switch (action) {
-            case 0:
-        }
       } 
     }
   }

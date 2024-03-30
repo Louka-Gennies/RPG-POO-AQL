@@ -22,6 +22,7 @@ export default class Menu {
     } else if (
       parseInt(userInput) > this.possibilities.length || parseInt(userInput) < 1
     ) {
+      console.clear();
       console.log(
         "you have to choose a number between 1 and " +
           this.possibilities.length,
