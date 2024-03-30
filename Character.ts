@@ -68,7 +68,7 @@ export default class Character {
     const menu = new Menu("Choose an item: ", choices);
     return menu.askQuestion();
   }
-  stat(character: Character): string {
+  showHp(character: Character): string {
     const totalBars = 20;
     const hpPerBar = character.maxHP / totalBars;
     const filledBars = Math.round(character.currentHP / hpPerBar);

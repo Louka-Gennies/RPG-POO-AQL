@@ -21,12 +21,12 @@ class gameManager {
     console.log("Game Started");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
-    const warrior = new Warrior(10, 5, 5, 100, 100);
-    const mage = new Mage(5, 2, 10, 50, 50, 10, 60, 60);
-    const paladin = new Paladin(7, 3, 7, 70, 70);
-    const barbarian = new Barbarian(10, 5, 5, 100, 100);
-    const thief = new Thief(5, 2, 10, 50, 50);
-    const priest = new Priest(7, 3, 7, 70, 70);
+    const warrior = new Warrior(10, 5, 5, 100, 100); // high attack and defense, no special attack, average speed
+    const mage = new Mage(5, 2, 10, 50, 50, 40, 20, 20); // low physical attack and defense, has mana and magic attack
+    const paladin = new Paladin(7, 3, 7, 70, 70); // lower attack than warrior, slightly higher defense, has holy attack
+    const barbarian = new Barbarian(10, 5, 5, 100, 100); // low defense, higher attack than warrior, has berserk attack
+    const thief = new Thief(5, 2, 10, 50, 50); // average defense and physical attack, high speed, has steal action
+    const priest = new Priest(7, 3, 7, 70, 70); // low defense, slightly higher attack than mage, has heal action
 
     const alliesChoice = ["Warrior", "Mage", "Paladin", "Barbarian", "Thief", "Priest"];
     const allies: Character[] = [];
@@ -40,7 +40,7 @@ class gameManager {
     while (allies.length < 3) {
       console.log("Your Team:\n");
       for (let i = 0; i < allies.length; i++) {
-        console.log(`${i + 1}. ` + allies[i].stat(allies[i]));
+        console.log(`${i + 1}. ` + allies[i].showHp(allies[i]));
       }
       const charChoice = new Menu("Choose your character: ", alliesChoice);
       const response = charChoice.askQuestion();
@@ -53,6 +53,7 @@ class gameManager {
             break;
           }
           allies.push(warrior);
+          alliesChoice[response] = `\x1b[90m${alliesChoice[response]}\x1b[0m`;
           console.clear();
           console.log("You chose Warrior")
           await new Promise((r) => setTimeout(r, 1000));
@@ -65,6 +66,7 @@ class gameManager {
             break;
           }
           allies.push(mage);
+          alliesChoice[response] = `\x1b[90m${alliesChoice[response]}\x1b[0m`;
           console.clear();
           console.log("You chose Mage")
           await new Promise((r) => setTimeout(r, 1000));
@@ -77,6 +79,7 @@ class gameManager {
             break;
           }
           allies.push(paladin);
+          alliesChoice[response] = `\x1b[90m${alliesChoice[response]}\x1b[0m`;
           console.clear();
           console.log("You chose Paladin")
           await new Promise((r) => setTimeout(r, 1000));
@@ -89,6 +92,7 @@ class gameManager {
             break;
           }
           allies.push(barbarian);
+          alliesChoice[response] = `\x1b[90m${alliesChoice[response]}\x1b[0m`;
           console.clear();
           console.log("You chose Barbarian")
           await new Promise((r) => setTimeout(r, 1000));
@@ -101,6 +105,7 @@ class gameManager {
             break;
           }
           allies.push(thief);
+          alliesChoice[response] = `\x1b[90m${alliesChoice[response]}\x1b[0m`;
           console.clear();
           console.log("You chose Thief")
           await new Promise((r) => setTimeout(r, 1000));
@@ -113,6 +118,7 @@ class gameManager {
             break;
           }
           allies.push(priest);
+          alliesChoice[response] = `\x1b[90m${alliesChoice[response]}\x1b[0m`;
           console.clear();
           console.log("You chose Priest")
           await new Promise((r) => setTimeout(r, 1000));
