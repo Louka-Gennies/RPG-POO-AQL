@@ -57,6 +57,17 @@ export default class Character {
     return (maxHP / 100) * prcntHP;
   }
 
+  actionMenu(): number {
+    const choices = ["Attack", "Special Attack", "Use Item"];
+    const menu = new Menu("Choose an action: ", choices);
+    return menu.askQuestion();
+  }
+
+  ItemMenu(): number {
+    const choices = ["Potion", "Half Star", "Ether", "Star Fragment"];
+    const menu = new Menu("Choose an item: ", choices);
+    return menu.askQuestion();
+  }
   stat(character: Character): string {
     const totalBars = 20;
     const hpPerBar = character.maxHP / totalBars;

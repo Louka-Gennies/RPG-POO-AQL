@@ -1,3 +1,4 @@
+import Character from "./Character.ts";
 import {
   Barbarian,
   Mage,
@@ -28,7 +29,7 @@ class gameManager {
     const priest = new Priest(7, 3, 7, 70, 70);
 
     const alliesChoice = ["Warrior", "Mage", "Paladin", "Barbarian", "Thief", "Priest"];
-    const allies = [];
+    const allies: Character[] = [];
     
     const monster1 = new Monster(10, 5, 5, 100, 100);
     const monster2 = new Monster(5, 2, 10, 50, 50);

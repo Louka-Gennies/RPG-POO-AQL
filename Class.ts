@@ -1,4 +1,5 @@
 import Character from "./Character.ts";
+import Menu from "./Menu.ts";
 
 export class Warrior extends Character {
   constructor(
@@ -11,7 +12,12 @@ export class Warrior extends Character {
     const name = "Warrior";
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
-}
+
+  specialAttack(enemies : Character[]): number {
+    console.log("The warrior don't have a special attack, he just attack");
+    return this.attack(enemies);
+  };
+};
 
 export class Mage extends Character {
   magicAttack: number;
@@ -35,15 +41,20 @@ export class Mage extends Character {
     this.currentMana = currentMana;
   }
 
-  specialAttack(phyAtk: number, currentHPennemy: number): number {
-    const atk = phyAtk;
-    this.currentMana -= 20;
-    if (atk < 0) {
+  specialAttack(enemies : Character[]): number {
+    this.currentMana -= 10;
+    const phyAtk = this.physicalAttack;
+    const enemyNames = enemies.map((enemy) => `${enemy.name}`);
+    const menu = new Menu("Choose a target: ", enemyNames);
+    const target = menu.askQuestion();
+    if (phyAtk < 0) {
       return 0;
-    } else if (currentHPennemy - atk < 0) {
-      return currentHPennemy;
+    } else if (enemies[target].currentHP - phyAtk < 0) {
+      enemies[target].currentHP = 0;
+      return enemies[target].currentHP;
     } else {
-      return atk;
+      enemies[target].currentHP -= phyAtk;
+      return phyAtk;
     }
   }
 }
@@ -60,17 +71,25 @@ export class Paladin extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  specialAttack(phyAtk: number, phyDef: number, currentHPennemy: number): number {
-    const atk = phyAtk - phyDef;
-    if (atk < 0) {
-      return 0;
-    } else if (currentHPennemy - atk < 0) {
-      return currentHPennemy;
-    } else {
-      return atk;
+  specialAttack(enemies : Character[]): number {
+    let totalAtk = 0;
+    const phyAtk = this.physicalAttack;
+    for (let i = 0; i < enemies.length; i++) {
+      const phyDef = enemies[i].physicalDefense;
+      const atk = Math.floor((phyAtk - phyDef) * 0.4);
+      if (atk < 0) {
+        totalAtk += 0;
+      } else if (enemies[i].currentHP - atk < 0) {
+        enemies[i].currentHP = 0;
+        totalAtk += enemies[i].currentHP;
+      } else {
+        enemies[i].currentHP -= atk;
+        totalAtk += atk;
+      }
     }
+    return totalAtk;
   }
-}
+};
 
 export class Barbarian extends Character {
   constructor(
@@ -84,18 +103,23 @@ export class Barbarian extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  specialAttack(
-    phyAtk: number,
-    phyDef: number,
-    currentHPennemy: number,
-  ): number {
-    const atk = phyAtk - phyDef;
+  specialAttack(enemies : Character[]): [number, number] {
+    const phyAtk = this.physicalAttack;
+    const enemyNames = enemies.map((enemy) => `${enemy.name}`);
+    const menu = new Menu("Choose a target: ", enemyNames);
+    const target = menu.askQuestion();
+    const phyDef = enemies[target].physicalDefense;
+    const atk = Math.floor((phyAtk - phyDef) * 1.3);
+    const selfAtk = Math.floor((this.maxHP / 100) * 20);
+    this.currentHP -= selfAtk;
     if (atk < 0) {
-      return 0;
-    } else if (currentHPennemy - atk < 0) {
-      return currentHPennemy;
+      return [0, selfAtk];
+    } else if (enemies[target].currentHP - atk < 0) {
+      enemies[target].currentHP = 0;
+      return [enemies[target].currentHP, selfAtk];
     } else {
-      return atk;
+      enemies[target].currentHP -= atk;
+      return [atk, selfAtk];
     }
   }
 }
@@ -141,7 +165,7 @@ export class Thief extends Character {
       console.log("You stole an half star");
     }
     else if (item > 5 && item <= 15) {
-      console.log("You stole an éther");
+      console.log("You stole an ether");
     }
     else if (item > 15 && item <= 30) {
       console.log("You stole an star fragment");

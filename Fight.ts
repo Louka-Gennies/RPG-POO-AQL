@@ -1,4 +1,5 @@
 import Character from "./Character.ts";
+import Menu from "./Menu.ts";
 
 export default class Fight {
   team1: Character[];
@@ -61,8 +62,10 @@ export default class Fight {
         const action = menu.askQuestion();
         switch (action) {
             case 0:
-                
-      }
+        }
+      } 
     }
   }
-}
+};
+
+
