@@ -25,7 +25,7 @@ export default class Character {
     this.currentHP = currentHP;
   }
 
-  attack(enemies : Character[]): number {
+  attack(enemies : Character[]): void {
     const phyAtk = this.physicalAttack;
     const enemyNames = enemies.map((enemy) => `${enemy.name}`);
     const menu = new Menu("Choose a target: ", enemyNames);
@@ -33,13 +33,13 @@ export default class Character {
     const phyDef = enemies[target].physicalDefense;
     const atk = phyAtk - phyDef;
     if (atk < 0) {
-      return 0;
+      console.log(`${this.name} attacked ${enemies[target].name} for 0 damage`);
     } else if (enemies[target].currentHP - atk < 0) {
       enemies[target].currentHP = 0;
-      return enemies[target].currentHP;
+      console.log(`${this.name} attacked ${enemies[target].name} for ${enemies[target].currentHP} damage and defeated him!`);
     } else {
       enemies[target].currentHP -= atk;
-      return atk;
+      console.log(`${this.name} attacked ${enemies[target].name} for ${atk} damage`);
     }
   }
 

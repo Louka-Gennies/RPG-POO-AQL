@@ -13,9 +13,9 @@ export class Warrior extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  specialAttack(enemies : Character[]): number {
+  specialAttack(enemies : Character[]): void {
     console.log("The warrior don't have a special attack, he just attack");
-    return this.attack(enemies);
+    this.attack(enemies);
   };
 };
 
@@ -41,20 +41,20 @@ export class Mage extends Character {
     this.currentMana = currentMana;
   }
 
-  specialAttack(enemies : Character[]): number {
+  specialAttack(enemies : Character[]) : void {
     this.currentMana -= 10;
     const phyAtk = this.physicalAttack;
     const enemyNames = enemies.map((enemy) => `${enemy.name}`);
     const menu = new Menu("Choose a target: ", enemyNames);
     const target = menu.askQuestion();
     if (phyAtk < 0) {
-      return 0;
+      console.log(`${this.name} attacked ${enemies[target].name} with a magical attack for 0 damage`);
     } else if (enemies[target].currentHP - phyAtk < 0) {
       enemies[target].currentHP = 0;
-      return enemies[target].currentHP;
+      console.log(`${this.name} attacked ${enemies[target].name} with a magical attack for ${enemies[target].currentHP} damage and defeated him!`);
     } else {
       enemies[target].currentHP -= phyAtk;
-      return phyAtk;
+      console.log(`${this.name} attacked ${enemies[target].name} with a magical attack for ${phyAtk} damage`);
     }
   }
 }
@@ -71,7 +71,7 @@ export class Paladin extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  specialAttack(enemies : Character[]): number {
+  specialAttack(enemies : Character[]) : void {
     let totalAtk = 0;
     const phyAtk = this.physicalAttack;
     for (let i = 0; i < enemies.length; i++) {
@@ -87,7 +87,7 @@ export class Paladin extends Character {
         totalAtk += atk;
       }
     }
-    return totalAtk;
+    console.log(`${this.name} attacked all enemies for a total of ${totalAtk} damage`);
   }
 };
 
@@ -103,7 +103,7 @@ export class Barbarian extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  specialAttack(enemies : Character[]): [number, number] {
+  specialAttack(enemies : Character[]): void {
     const phyAtk = this.physicalAttack;
     const enemyNames = enemies.map((enemy) => `${enemy.name}`);
     const menu = new Menu("Choose a target: ", enemyNames);
@@ -113,13 +113,13 @@ export class Barbarian extends Character {
     const selfAtk = Math.floor((this.maxHP / 100) * 20);
     this.currentHP -= selfAtk;
     if (atk < 0) {
-      return [0, selfAtk];
+      console.log(`${this.name} attacked ${enemies[target].name} for 0 damage and deal to himself ${selfAtk} damage`);
     } else if (enemies[target].currentHP - atk < 0) {
       enemies[target].currentHP = 0;
-      return [enemies[target].currentHP, selfAtk];
+      console.log(`${this.name} attacked ${enemies[target].name} for ${enemies[target].currentHP} damage and defeated him! and deal to himself ${selfAtk} damage`);
     } else {
       enemies[target].currentHP -= atk;
-      return [atk, selfAtk];
+      console.log(`${this.name} attacked ${enemies[target].name} for ${atk} damage and deal to himself ${selfAtk} damage`);
     }
   }
 }
@@ -136,13 +136,16 @@ export class Priest extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  specialAttack(maxHP: number, currentHP: number): number {
-    const addHP = (maxHP / 100) * 25;
-    const health = currentHP + addHP;
-    if (health > maxHP) {
-      return maxHP;
+  specialAttack(allies : Character[]) : void  {
+    const alliesName = allies.map((allie) => `${allie.name}`);
+    const menu = new Menu("Choose a target: ", alliesName);
+    const target = menu.askQuestion();
+    const addHP = (allies[target].maxHP / 100) * 25;
+    const health = allies[target].currentHP + addHP;
+    if (health > allies[target].maxHP) {
+      console.log(`${this.name} healed ${allies[target].name} for ${allies[target].maxHP - allies[target].currentHP} HP`);
     } else {
-      return health;
+      console.log(`${this.name} healed ${allies[target].name} for ${addHP} HP`);
     }
   }
 }
@@ -204,7 +207,7 @@ export class Monster extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  attack(enemies : Character[]): number {
+  attack(enemies : Character[]): void {
     let targetIndex;
     const phyAtk = this.physicalAttack;
     if (Math.random() < 0.8) {
@@ -214,13 +217,13 @@ export class Monster extends Character {
     }
     const atk = phyAtk - enemies[targetIndex].physicalDefense;
     if (atk < 0) {
-      return 0;
+      console.log(`${this.name} attacked ${enemies[targetIndex].name} for 0 damage`);
     } else if (enemies[targetIndex].currentHP - atk < 0) {
       enemies[targetIndex].currentHP = 0;
-      return enemies[targetIndex].currentHP;
+      console.log(`${this.name} attacked ${enemies[targetIndex].name} for ${enemies[targetIndex].currentHP} damage and defeated him!`);
     } else {
       enemies[targetIndex].currentHP -= atk;
-      return atk;
+      console.log(`${this.name} attacked ${enemies[targetIndex].name} for ${atk} damage`);
     }
   }
 }
@@ -250,7 +253,7 @@ export class Boss extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  attack(enemies : Character[]): number {
+  attack(enemies : Character[]): void {
     let targetIndex;
     const phyAtk = this.physicalAttack;
     if (Math.random() < 0.7) {
@@ -261,29 +264,29 @@ export class Boss extends Character {
       }
       const atk = phyAtk - enemies[targetIndex].physicalDefense;
       if (atk < 0) {
-        return 0;
+        console.log(`${this.name} attacked ${enemies[targetIndex].name} for 0 damage`);
       } else if (enemies[targetIndex].currentHP - atk < 0) {
         enemies[targetIndex].currentHP = 0;
-        return enemies[targetIndex].currentHP;
+        console.log(`${this.name} attacked ${enemies[targetIndex].name} for ${enemies[targetIndex].currentHP} damage and defeated him!`);
       } else {
         enemies[targetIndex].currentHP -= atk;
-        return atk;
+        console.log(`${this.name} attacked ${enemies[targetIndex].name} for ${atk} damage`);
       }
     } else {
-      let atkTotal = 0;
+      let totalAtk = 0;
       for (let i = 0; i < enemies.length; i++) {
         const atk = phyAtk - enemies[i].physicalDefense;
         if (atk < 0) {
-          return 0;
+          totalAtk += 0;
         } else if (enemies[i].currentHP - atk < 0) {
           enemies[i].currentHP = 0;
-          atkTotal += enemies[i].currentHP;
+          totalAtk += enemies[i].currentHP;
         } else {
           enemies[i].currentHP -= atk;
-          atkTotal += atk;
+          totalAtk += atk;
         }
       }
-      return atkTotal;
+      console.log(`${this.name} attacked all enemies for a total of ${totalAtk} damage`);
     }
   }
 }
