@@ -1,5 +1,6 @@
 import Character from "./Character.ts";
 import Menu from "./Menu.ts";
+import chalk from "chalk";
 
 export class Warrior extends Character {
   constructor(
@@ -41,8 +42,38 @@ export class Mage extends Character {
     this.currentMana = currentMana;
   }
 
+  showHp(): string {
+    const totalBars = 20;
+    const hpPerBar = this.maxHP / totalBars;
+    const filledBars = Math.round(this.currentHP / hpPerBar);
+    const emptyBars = totalBars - filledBars;
+    let filledBarsString = "";
+    if (filledBars <= 5) {
+      filledBarsString = chalk.hex("#FF3333")("\u2588".repeat(filledBars));
+    } else if (filledBars <= 10) {
+      filledBarsString = chalk.hex("#FF9933")("\u2588".repeat(filledBars));
+    } else if (filledBars <= 15) {
+      filledBarsString = chalk.hex("#FFFF33")("\u2588".repeat(filledBars));
+    } else {
+      filledBarsString = chalk.hex("#33FF33")("\u2588".repeat(filledBars));
+    }
+    const emptyBarsString = chalk.gray("\u2588".repeat(emptyBars));
+    const hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
+
+    const totalManaBars = 10;
+    const manaPerBar = this.maxMana / totalManaBars;
+    const filledManaBars = Math.round(this.currentMana / manaPerBar);
+    const emptyManaBars = totalManaBars - filledManaBars;
+    let filledManaBarsString = "";
+    filledManaBarsString = chalk.hex("#32d7e6")("\u2588".repeat(filledManaBars));
+    const emptyManaBarsString = chalk.gray("\u2588".repeat(emptyManaBars));
+    const manaBar = `Mana : [${filledManaBarsString}${emptyManaBarsString}] (${this.currentMana}/${this.maxMana})`;
+
+    return `${hpBar} / ${manaBar}`;
+  }
+
   specialAttack(enemies : Character[]) : void {
-    this.currentMana -= 10;
+    this.currentMana -= 5;
     const phyAtk = this.physicalAttack;
     const enemyNames = enemies.map((enemy) => `${enemy.name}`);
     const menu = new Menu("Choose a target: ", enemyNames);
@@ -87,7 +118,7 @@ export class Paladin extends Character {
         totalAtk += atk;
       }
     }
-    console.log(`${this.name} attacked all enemies for a total of ${totalAtk} damage`);
+    console.log(`${this.name} attacked all enemies with his holy attack for a total of ${totalAtk} damage`);
   }
 };
 
@@ -113,13 +144,13 @@ export class Barbarian extends Character {
     const selfAtk = Math.floor((this.maxHP / 100) * 20);
     this.currentHP -= selfAtk;
     if (atk < 0) {
-      console.log(`${this.name} attacked ${enemies[target].name} for 0 damage and deal to himself ${selfAtk} damage`);
+      console.log(`${this.name} attacked ${enemies[target].name} for 0 damage with his berserk attack but deal to himself ${selfAtk} damage`);
     } else if (enemies[target].currentHP - atk < 0) {
       enemies[target].currentHP = 0;
-      console.log(`${this.name} attacked ${enemies[target].name} for ${enemies[target].currentHP} damage and defeated him! and deal to himself ${selfAtk} damage`);
+      console.log(`${this.name} attacked ${enemies[target].name} for ${enemies[target].currentHP} damage and defeated him with his berserk attack but deal to himself ${selfAtk} damage`);
     } else {
       enemies[target].currentHP -= atk;
-      console.log(`${this.name} attacked ${enemies[target].name} for ${atk} damage and deal to himself ${selfAtk} damage`);
+      console.log(`${this.name} attacked ${enemies[target].name} for ${atk} damage with his berserk attack but deal to himself ${selfAtk} damage`);
     }
   }
 }

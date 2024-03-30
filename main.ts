@@ -17,21 +17,47 @@ class gameManager {
     console.log("Game Manager Created");
   }
 
+  countVisibleCharacters(str: string) {
+    return [...str].length;
+  }
+
   stats(allies : Character[], monsters : Character[]) {
     let maxLineLen = 0;
     for (let i = 0; i < allies.length; i++) {
-      if (allies[i].showHp().length > maxLineLen) {
-        maxLineLen = allies[i].showHp().length;
+      const lineLength = this.countVisibleCharacters(allies[i].showHp());
+      if (lineLength > maxLineLen) {
+        maxLineLen = lineLength;
       }
     }
-    console.log(chalk.hex("#1a67ed")("Heroes :") + " ".repeat(maxLineLen - 20) + chalk.hex("#db2323")("Monsters :"));
+    let containMage = false;
     for (let i = 0; i < allies.length; i++) {
-      let formatLine = allies[i].showHp();
-      if (allies[i].showHp().length != maxLineLen) {
-        const spaces = maxLineLen - allies[i].showHp().length;
-        formatLine += " ".repeat(spaces);
+      if (allies[i] instanceof Mage) {
+        containMage = true;
+        break;
       }
-      console.log(formatLine + " ".repeat(10) + monsters[i].showHp());
+    }
+    if (containMage) {
+      console.log(chalk.hex("#1a67ed")("Heroes :") + " ".repeat(maxLineLen - 43) + chalk.hex("#db2323")("Monsters :"));
+      for (let i = 0; i < allies.length; i++) {
+        let formatLine = allies[i].showHp();
+        const lineLength = this.countVisibleCharacters(formatLine);
+        if (lineLength != maxLineLen) {
+          const spaces = maxLineLen - lineLength;
+          formatLine += " ".repeat(spaces -23);
+        }
+        console.log(formatLine + " ".repeat(10) + monsters[i].showHp());
+      }
+    } else {
+      console.log(chalk.hex("#1a67ed")("Heroes :") + " ".repeat(maxLineLen - 20) + chalk.hex("#db2323")("Monsters :"));
+      for (let i = 0; i < allies.length; i++) {
+        let formatLine = allies[i].showHp();
+        const lineLength = this.countVisibleCharacters(formatLine);
+        if (lineLength != maxLineLen) {
+          const spaces = maxLineLen - lineLength;
+          formatLine += " ".repeat(spaces);
+        }
+        console.log(formatLine + " ".repeat(10) + monsters[i].showHp());
+      }
     }
   }
 

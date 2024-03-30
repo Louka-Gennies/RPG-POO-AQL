@@ -68,6 +68,7 @@ export default class Character {
     const menu = new Menu("Choose an item: ", choices);
     return menu.askQuestion();
   }
+
   showHp(): string {
     const totalBars = 20;
     const hpPerBar = this.maxHP / totalBars;
@@ -87,4 +88,9 @@ export default class Character {
     const hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
     return `${hpBar}`;
   }
+
+  fullStats(): string {
+    return `${this.name} : ${this.physicalAttack} / ${this.physicalDefense} / ${this.speed} / ${this.maxHP} / ${this.currentHP}`;
+  }
+
 }
