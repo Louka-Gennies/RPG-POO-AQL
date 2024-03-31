@@ -18,6 +18,7 @@ class gameManager {
   }
 
   maxChar(a : string) : number {
+    // deno-lint-ignore no-control-regex
     const noColor = a.replace(/\x1b\[[0-9;]*m/g, '');
     return noColor.length;
   }
