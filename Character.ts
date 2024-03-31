@@ -76,15 +76,15 @@ export default class Character {
     const emptyBars = totalBars - filledBars;
     let filledBarsString = "";
     if (filledBars <= 5) {
-      filledBarsString = chalk.hex("#FF3333")("\u2588".repeat(filledBars));
+      filledBarsString = chalk.hex("#FF3333")("█".repeat(filledBars));
     } else if (filledBars <= 10) {
-      filledBarsString = chalk.hex("#FF9933")("\u2588".repeat(filledBars));
+      filledBarsString = chalk.hex("#FF9933")("█".repeat(filledBars));
     } else if (filledBars <= 15) {
-      filledBarsString = chalk.hex("#FFFF33")("\u2588".repeat(filledBars));
+      filledBarsString = chalk.hex("#FFFF33")("█".repeat(filledBars));
     } else {
-      filledBarsString = chalk.hex("#33FF33")("\u2588".repeat(filledBars));
+      filledBarsString = chalk.hex("#33FF33")("█".repeat(filledBars));
     }
-    const emptyBarsString = chalk.gray("\u2588".repeat(emptyBars));
+    const emptyBarsString = chalk.gray("█".repeat(emptyBars));
     const hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
     return `${hpBar}`;
   }

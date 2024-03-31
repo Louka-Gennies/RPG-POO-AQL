@@ -17,47 +17,29 @@ class gameManager {
     console.log("Game Manager Created");
   }
 
-  countVisibleCharacters(str: string) {
-    return [...str].length;
+  maxChar(a : string) : number {
+    const noColor = a.replace(/\x1b\[[0-9;]*m/g, '');
+    return noColor.length;
   }
 
   stats(allies : Character[], monsters : Character[]) {
     let maxLineLen = 0;
+    const spacing = 10;
     for (let i = 0; i < allies.length; i++) {
-      const lineLength = this.countVisibleCharacters(allies[i].showHp());
+      const lineLength = this.maxChar(allies[i].showHp());
       if (lineLength > maxLineLen) {
         maxLineLen = lineLength;
       }
     }
-    let containMage = false;
+    console.log(chalk.hex("#1a67ed")("Heroes :") + " ".repeat(maxLineLen- 8 + spacing) + chalk.hex("#db2323")("Monsters :"));
     for (let i = 0; i < allies.length; i++) {
-      if (allies[i] instanceof Mage) {
-        containMage = true;
-        break;
+      let formatLine = allies[i].showHp();
+      const lineLength = this.maxChar(formatLine);
+      if (lineLength != maxLineLen) {
+        const spaces = maxLineLen - lineLength;
+        formatLine += " ".repeat(spaces);
       }
-    }
-    if (containMage) {
-      console.log(chalk.hex("#1a67ed")("Heroes :") + " ".repeat(maxLineLen - 43) + chalk.hex("#db2323")("Monsters :"));
-      for (let i = 0; i < allies.length; i++) {
-        let formatLine = allies[i].showHp();
-        const lineLength = this.countVisibleCharacters(formatLine);
-        if (lineLength != maxLineLen) {
-          const spaces = maxLineLen - lineLength;
-          formatLine += " ".repeat(spaces -23);
-        }
-        console.log(formatLine + " ".repeat(10) + monsters[i].showHp());
-      }
-    } else {
-      console.log(chalk.hex("#1a67ed")("Heroes :") + " ".repeat(maxLineLen - 20) + chalk.hex("#db2323")("Monsters :"));
-      for (let i = 0; i < allies.length; i++) {
-        let formatLine = allies[i].showHp();
-        const lineLength = this.countVisibleCharacters(formatLine);
-        if (lineLength != maxLineLen) {
-          const spaces = maxLineLen - lineLength;
-          formatLine += " ".repeat(spaces);
-        }
-        console.log(formatLine + " ".repeat(10) + monsters[i].showHp());
-      }
+      console.log(formatLine + " ".repeat(spacing) + monsters[i].showHp());
     }
   }
 
