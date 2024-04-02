@@ -7,7 +7,7 @@ import {
   Priest,
   Thief,
   Warrior,
-} from "./Class.ts";
+} from "./class/Class.ts";
 import Fight from "./Fight.ts";
 import Menu from "./Menu.ts";
 import chalk from "chalk";

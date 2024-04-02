@@ -1,5 +1,5 @@
-import Character from "./Character.ts";
-import Menu from "./Menu.ts";
+import Character from "../Character.ts";
+import Menu from "../Menu.ts";
 import chalk from "chalk";
 
 export class Warrior extends Character {
