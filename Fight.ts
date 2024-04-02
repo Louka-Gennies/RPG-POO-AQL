@@ -38,11 +38,6 @@ export default class Fight {
     const index = team.indexOf(character);
     team.splice(index, 1);
   }
-  displayMenu() {
-    console.log("1. Attack");
-    console.log("2. Special attack");
-    console.log("3. Use item");
-  }
 
   fight() {
     while (!this.isFinished) {
@@ -57,9 +52,11 @@ export default class Fight {
           this.isFinished = true;
           break;
         }
-      } 
+      }
     }
   }
+
+
 };
 
 
