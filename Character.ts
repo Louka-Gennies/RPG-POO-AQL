@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import Menu from "./Menu.ts"
 
 export default class Character {
   name: string;
@@ -24,14 +25,21 @@ export default class Character {
     this.currentHP = currentHP;
   }
 
-  attack(phyAtk: number, phyDef: number, currentHPennemy: number): number {
+  attack(enemies : Character[]): void {
+    const phyAtk = this.physicalAttack;
+    const enemyNames = enemies.map((enemy) => `${enemy.name}`);
+    const menu = new Menu("Choose a target: ", enemyNames);
+    const target = menu.askQuestion();
+    const phyDef = enemies[target].physicalDefense;
     const atk = phyAtk - phyDef;
     if (atk < 0) {
-      return 0;
-    } else if (currentHPennemy - atk < 0) {
-      return currentHPennemy;
+      console.log(`${this.name} attacked ${enemies[target].name} for 0 damage`);
+    } else if (enemies[target].currentHP - atk < 0) {
+      enemies[target].currentHP = 0;
+      console.log(`${this.name} attacked ${enemies[target].name} for ${enemies[target].currentHP} damage and defeated him!`);
     } else {
-      return atk;
+      enemies[target].currentHP -= atk;
+      console.log(`${this.name} attacked ${enemies[target].name} for ${atk} damage`);
     }
   }
 
@@ -49,23 +57,40 @@ export default class Character {
     return (maxHP / 100) * prcntHP;
   }
 
-  stat(character: Character): string {
+  actionMenu(): number {
+    const choices = ["Attack", "Special Attack", "Use Item"];
+    const menu = new Menu("Choose an action: ", choices);
+    return menu.askQuestion();
+  }
+
+  ItemMenu(): number {
+    const choices = ["Potion", "Half Star", "Ether", "Star Fragment"];
+    const menu = new Menu("Choose an item: ", choices);
+    return menu.askQuestion();
+  }
+
+  showHp(): string {
     const totalBars = 20;
-    const hpPerBar = character.maxHP / totalBars;
-    const filledBars = Math.round(character.currentHP / hpPerBar);
+    const hpPerBar = this.maxHP / totalBars;
+    const filledBars = Math.round(this.currentHP / hpPerBar);
     const emptyBars = totalBars - filledBars;
     let filledBarsString = "";
     if (filledBars <= 5) {
-      filledBarsString = chalk.hex("#FF3333")("\u2588".repeat(filledBars));
+      filledBarsString = chalk.hex("#FF3333")("█".repeat(filledBars));
     } else if (filledBars <= 10) {
-      filledBarsString = chalk.hex("#FF9933")("\u2588".repeat(filledBars));
+      filledBarsString = chalk.hex("#FF9933")("█".repeat(filledBars));
     } else if (filledBars <= 15) {
-      filledBarsString = chalk.hex("#FFFF33")("\u2588".repeat(filledBars));
+      filledBarsString = chalk.hex("#FFFF33")("█".repeat(filledBars));
     } else {
-      filledBarsString = chalk.hex("#33FF33")("\u2588".repeat(filledBars));
+      filledBarsString = chalk.hex("#33FF33")("█".repeat(filledBars));
     }
-    const emptyBarsString = chalk.gray("\u2588".repeat(emptyBars));
-    const hpBar = `${this.name} HP: [${filledBarsString}${emptyBarsString}] (${character.currentHP}/${character.maxHP})`;
-    return `${hpBar}\n`;
+    const emptyBarsString = chalk.gray("█".repeat(emptyBars));
+    const hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
+    return `${hpBar}`;
   }
+
+  fullStats(): string {
+    return `${this.name} : ${this.physicalAttack} / ${this.physicalDefense} / ${this.speed} / ${this.maxHP} / ${this.currentHP}`;
+  }
+
 }
