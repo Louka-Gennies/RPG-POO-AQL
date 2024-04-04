@@ -58,7 +58,12 @@ export class Mage extends Character {
       filledBarsString = chalk.hex("#33FF33")("\u2588".repeat(filledBars));
     }
     const emptyBarsString = chalk.gray("\u2588".repeat(emptyBars));
-    const hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
+    let hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
+    if (this.active) {
+      hpBar = chalk.hex("#00ffdd")(`${this.name}`) + ` : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
+    } else {
+      hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
+    }
 
     const totalManaBars = 10;
     const manaPerBar = this.maxMana / totalManaBars;

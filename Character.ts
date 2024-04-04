@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import Menu from "./Menu.ts"
+import Inventory from "./Inventory.ts";
 
 export default class Character {
   name: string;
@@ -8,6 +9,7 @@ export default class Character {
   speed: number;
   maxHP: number;
   currentHP: number;
+  active: boolean = false;
 
   constructor(
     name: string,
@@ -34,12 +36,15 @@ export default class Character {
     const phyDef = enemies[target].physicalDefense;
     const atk = phyAtk - phyDef;
     if (atk <= 0) {
+      console.clear();
       console.log(`${this.name} attacked ${enemies[target].name} for 0 damage`);
     } else if (enemies[target].currentHP - atk <= 0) {
+      console.clear();
       enemies[target].currentHP = 0;
       console.log(`${this.name} attacked ${enemies[target].name} for ${enemies[target].currentHP} damage and defeated him!`);
       enemies.splice(target, 1);
     } else {
+      console.clear();
       enemies[target].currentHP -= atk;
       console.log(`${this.name} attacked ${enemies[target].name} for ${atk} damage`);
     }
@@ -68,7 +73,11 @@ export default class Character {
         const spaces = maxLineLen - lineLength;
         formatLine += " ".repeat(spaces);
       }
-      console.log(formatLine + " ".repeat(spacing) + monsters[i].showHp() + "\n");
+      if (monsters[i]) {
+        console.log(formatLine + " ".repeat(spacing) + monsters[i].showHp() + "\n");
+      } else {
+        console.log(formatLine + "\n");
+      }
     }
   }
 
@@ -96,8 +105,11 @@ export default class Character {
     return menu.askQuestion();
   }
 
-  ItemMenu(): number {
-    const choices = ["Potion", "Half Star", "Ether", "Star Fragment"];
+  ItemMenu(invent : Inventory): number {
+    const choices : string[] = [];
+    for (let i = 0; i < invent.items.length; i++) {
+      choices.push(invent.items[i].name);
+    }
     const menu = new Menu("Choose an item: ", choices);
     return menu.askQuestion();
   }
@@ -105,7 +117,12 @@ export default class Character {
   showHp(): string {
     const totalBars = 20;
     const hpPerBar = this.maxHP / totalBars;
-    const filledBars = Math.round(this.currentHP / hpPerBar);
+    let filledBars = totalBars
+    if (this.currentHP <= 0) {
+      filledBars = 0;
+    } else {
+      filledBars = Math.round(this.currentHP / hpPerBar);
+    }
     const emptyBars = totalBars - filledBars;
     let filledBarsString = "";
     if (filledBars <= 5) {
@@ -118,7 +135,12 @@ export default class Character {
       filledBarsString = chalk.hex("#33FF33")("█".repeat(filledBars));
     }
     const emptyBarsString = chalk.gray("█".repeat(emptyBars));
-    const hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
+    let hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
+    if (this.active) {
+      hpBar = chalk.hex("#00ffdd")(`${this.name}`) + ` : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
+    } else {
+      hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
+    }
     return `${hpBar}`;
   }
 

@@ -1,16 +1,9 @@
 import Character from "./Character.ts";
-import {
-  Barbarian,
-  Mage,
-  Monster,
-  Paladin,
-  Priest,
-  Thief,
-  Warrior,
-} from "./class/Class.ts";
-import Fight from "./Fight.ts";
+import Room from "./Room.ts";
+import {Barbarian,Mage,Monster,Paladin,Priest,Thief,Warrior,} from "./class/Class.ts";;
 import Menu from "./Menu.ts";
-import chalk from "chalk";
+import Item from "./Item.ts";
+import Inventory from "./Inventory.ts";
 
 class gameManager {
   constructor() {
@@ -22,21 +15,30 @@ class gameManager {
     console.log("Game Started");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
-    const warrior = new Warrior(10, 5, 5, 100, 1); // high attack and defense, no special attack, average speed
+    const warrior = new Warrior(10, 5, 5, 100, 100); // high attack and defense, no special attack, average speed
     const mage = new Mage(5, 2, 10, 50, 50, 40, 20, 20); // low physical attack and defense, has mana and magic attack
     const paladin = new Paladin(7, 3, 7, 70, 70); // lower attack than warrior, slightly higher defense, has holy attack
-    const barbarian = new Barbarian(10, 5, 5, 100, 1); // low defense, higher attack than warrior, has berserk attack
+    const barbarian = new Barbarian(10, 5, 5, 100, 100); // low defense, higher attack than warrior, has berserk attack
     const thief = new Thief(5, 2, 10, 50, 50); // average defense and physical attack, high speed, has steal action
     const priest = new Priest(7, 3, 7, 70, 70); // low defense, slightly higher attack than mage, has heal action
 
     const alliesChoice = ["Warrior", "Mage", "Paladin", "Barbarian", "Thief", "Priest"];
     const allies: Character[] = [];
     
-    const monster1 = new Monster(10, 5, 5, 100, 100);
-    const monster2 = new Monster(5, 2, 10, 50, 50);
-    const monster3 = new Monster(7, 3, 7, 70, 70);
+    const monster1 = new Monster(10, 0, 5, 100, 20);
+    const monster2 = new Monster(5, 0, 10, 50, 20);
+    const monster3 = new Monster(7, 0, 7, 70, 20);
 
     const monsters = [monster1, monster2, monster3];
+
+    const potion = new Item("Potion", 2);
+    const ether = new Item("Ether", 1);
+    const starFragment = new Item("Star Fragment", 1);
+
+    const inventory = new Inventory();
+    inventory.addItem(potion);
+    inventory.addItem(ether);
+    inventory.addItem(starFragment);
 
     while (allies.length < 3) {
       console.log("Your Team:\n");
@@ -136,8 +138,17 @@ class gameManager {
     console.log("Start of the fight !!!");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
-    const room1 = new Fight(allies, monsters);
-    room1.fight();
+    const room1 = new Room(allies, monsters, "chest");
+    const quit = await room1.enterRoom(inventory);
+    if (!quit) {
+      await new Promise((r) => setTimeout(r, 1000));
+      console.clear();
+    } else {
+      await new Promise((r) => setTimeout(r, 1000));
+      console.clear();
+      console.log("Game Over");
+    }
+
   }
 }
 
