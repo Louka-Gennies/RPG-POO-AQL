@@ -18,7 +18,7 @@ export default class Inventory {
     public showItems(): void {
         console.log('Inventory:\n');
         this.items.forEach(item => {
-            console.log(`${item.getName()} x${item.getQuantity()}\n`);
+            console.log(`${item.getName()} x ${item.getQuantity()}\n`);
         });
     }
 }

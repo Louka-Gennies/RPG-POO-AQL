@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import Menu from "./Menu.ts"
 import Inventory from "./Inventory.ts";
+import Item from "./Item.ts";
 
 export default class Character {
   name: string;
@@ -48,13 +49,13 @@ export default class Character {
       enemies[target].currentHP -= atk;
       console.log(`${this.name} attacked ${enemies[target].name} for ${atk} damage`);
     }
-  }
+  };
 
   maxChar(a : string) : number {
     // deno-lint-ignore no-control-regex
     const noColor = a.replace(/\x1b\[[0-9;]*m/g, '');
     return noColor.length;
-  }
+  };
 
   stats(allies : Character[], monsters : Character[]) {
     let maxLineLen = 0;
@@ -79,11 +80,11 @@ export default class Character {
         console.log(formatLine + "\n");
       }
     }
-  }
+  };
 
   specialAttack(enemies : Character[]): void {
     console.log("Special Attack");
-  }
+  };
 
   heal(prcntHP: number, maxHP: number, currentHP: number): number {
     const addHP = (maxHP / 100) * prcntHP;
@@ -93,26 +94,26 @@ export default class Character {
     } else {
       return health;
     }
-  }
+  };
 
   res(prcntHP: number, maxHP: number): number {
     return (maxHP / 100) * prcntHP;
-  }
+  };
 
   actionMenu(): number {
     const choices = ["Attack", "Special Attack", "Use Item"];
     const menu = new Menu("Choose an action: ", choices);
     return menu.askQuestion();
-  }
+  };
 
   ItemMenu(invent : Inventory): number {
     const choices : string[] = [];
     for (let i = 0; i < invent.items.length; i++) {
-      choices.push(invent.items[i].name);
+      choices.push(invent.items[i].name + " x " + invent.items[i].quantity);
     }
     const menu = new Menu("Choose an item: ", choices);
     return menu.askQuestion();
-  }
+  };
 
   showHp(): string {
     const totalBars = 20;
@@ -142,10 +143,21 @@ export default class Character {
       hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
     }
     return `${hpBar}`;
-  }
+  };
 
   fullStats(): string {
     return `${this.name} : ${this.physicalAttack} / ${this.physicalDefense} / ${this.speed} / ${this.maxHP} / ${this.currentHP}`;
-  }
+  };
 
-}
+  useItem(invent : Inventory): void {
+    let index = this.ItemMenu(invent);
+    if (invent.items[index].quantity === 0) {
+        console.log("You don't have any of this item left.");
+        this.useItem(invent);
+    } else {
+        console.log(`You used ${invent.items[index].name}`);
+        invent.items[index].quantity -= 1;
+        invent.showItems();
+    }
+  };
+};
