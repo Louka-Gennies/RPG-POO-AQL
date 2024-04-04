@@ -17,42 +17,15 @@ class gameManager {
     console.log("Game Manager Created");
   }
 
-  maxChar(a : string) : number {
-    // deno-lint-ignore no-control-regex
-    const noColor = a.replace(/\x1b\[[0-9;]*m/g, '');
-    return noColor.length;
-  }
-
-  stats(allies : Character[], monsters : Character[]) {
-    let maxLineLen = 0;
-    const spacing = 10;
-    for (let i = 0; i < allies.length; i++) {
-      const lineLength = this.maxChar(allies[i].showHp());
-      if (lineLength > maxLineLen) {
-        maxLineLen = lineLength;
-      }
-    }
-    console.log(chalk.hex("#1a67ed")("Heroes :") + " ".repeat(maxLineLen- 8 + spacing) + chalk.hex("#db2323")("Monsters :"));
-    for (let i = 0; i < allies.length; i++) {
-      let formatLine = allies[i].showHp();
-      const lineLength = this.maxChar(formatLine);
-      if (lineLength != maxLineLen) {
-        const spaces = maxLineLen - lineLength;
-        formatLine += " ".repeat(spaces);
-      }
-      console.log(formatLine + " ".repeat(spacing) + monsters[i].showHp());
-    }
-  }
-
   async startGame() {
     console.clear();
     console.log("Game Started");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
-    const warrior = new Warrior(10, 5, 5, 100, 100); // high attack and defense, no special attack, average speed
+    const warrior = new Warrior(10, 5, 5, 100, 1); // high attack and defense, no special attack, average speed
     const mage = new Mage(5, 2, 10, 50, 50, 40, 20, 20); // low physical attack and defense, has mana and magic attack
     const paladin = new Paladin(7, 3, 7, 70, 70); // lower attack than warrior, slightly higher defense, has holy attack
-    const barbarian = new Barbarian(10, 5, 5, 100, 100); // low defense, higher attack than warrior, has berserk attack
+    const barbarian = new Barbarian(10, 5, 5, 100, 1); // low defense, higher attack than warrior, has berserk attack
     const thief = new Thief(5, 2, 10, 50, 50); // average defense and physical attack, high speed, has steal action
     const priest = new Priest(7, 3, 7, 70, 70); // low defense, slightly higher attack than mage, has heal action
 
@@ -163,7 +136,8 @@ class gameManager {
     console.log("Start of the fight !!!");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
-    this.stats(allies, monsters);
+    const room1 = new Fight(allies, monsters);
+    room1.fight();
   }
 }
 

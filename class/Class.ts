@@ -234,7 +234,7 @@ export class Monster extends Character {
       "Zombie",
     ];
     const randomName = Math.floor(Math.random() * monsterName.length);
-    name = monsterName[randomName];
+    const name = monsterName[randomName];
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
@@ -247,11 +247,12 @@ export class Monster extends Character {
       targetIndex = enemies.reduce((lowest, enemy, index) => enemy.currentHP < enemies[lowest].currentHP ? index : lowest, 0);
     }
     const atk = phyAtk - enemies[targetIndex].physicalDefense;
-    if (atk < 0) {
+    if (atk <= 0) {
       console.log(`${this.name} attacked ${enemies[targetIndex].name} for 0 damage`);
-    } else if (enemies[targetIndex].currentHP - atk < 0) {
+    } else if (enemies[targetIndex].currentHP - atk <= 0) {
       enemies[targetIndex].currentHP = 0;
       console.log(`${this.name} attacked ${enemies[targetIndex].name} for ${enemies[targetIndex].currentHP} damage and defeated him!`);
+      enemies.splice(targetIndex, 1);
     } else {
       enemies[targetIndex].currentHP -= atk;
       console.log(`${this.name} attacked ${enemies[targetIndex].name} for ${atk} damage`);
@@ -280,7 +281,7 @@ export class Boss extends Character {
       "Zombie",
     ];
     const randomName = Math.floor(Math.random() * monsterName.length);
-    name = monsterName[randomName];
+    const name = monsterName[randomName];
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
@@ -294,11 +295,12 @@ export class Boss extends Character {
         targetIndex = enemies.reduce((lowest, enemy, index) => enemy.currentHP < enemies[lowest].currentHP ? index : lowest, 0);
       }
       const atk = phyAtk - enemies[targetIndex].physicalDefense;
-      if (atk < 0) {
+      if (atk <= 0) {
         console.log(`${this.name} attacked ${enemies[targetIndex].name} for 0 damage`);
-      } else if (enemies[targetIndex].currentHP - atk < 0) {
+      } else if (enemies[targetIndex].currentHP - atk <= 0) {
         enemies[targetIndex].currentHP = 0;
         console.log(`${this.name} attacked ${enemies[targetIndex].name} for ${enemies[targetIndex].currentHP} damage and defeated him!`);
+        enemies.splice(targetIndex, 1);
       } else {
         enemies[targetIndex].currentHP -= atk;
         console.log(`${this.name} attacked ${enemies[targetIndex].name} for ${atk} damage`);
