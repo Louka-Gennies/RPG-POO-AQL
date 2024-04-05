@@ -18,4 +18,16 @@ export default class Item {
     public setQuantity(quantity: number): void {
         this.quantity = quantity;
     }
+
+    public addQuantity(): void {
+        this.quantity += 1;
+    }
+
+    public removeQuantity(): void {
+        if (this.quantity - 1 < 0) {
+            console.log('Cannot remove more than what is in the inventory');
+        } else {
+            this.quantity -= 1;
+        }
+    }
 }

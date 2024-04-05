@@ -72,12 +72,12 @@ export default class Fight {
               case 1:
                 if (character.name === "Priest") {
                   console.clear();
-                  character.specialAttack(this.team1);
+                  character.specialAttack(this.team1, invent);
                   await new Promise((r) => setTimeout(r, 1000));
                   break;
                 } else {
                   console.clear();
-                  character.specialAttack(this.team2);
+                  character.specialAttack(this.team2, invent);
                   await new Promise((r) => setTimeout(r, 1000));
                   break;
                 }

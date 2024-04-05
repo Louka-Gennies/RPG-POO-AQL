@@ -1,6 +1,7 @@
 import Character from "../Character.ts";
 import Menu from "../Menu.ts";
 import chalk from "chalk";
+import Inventory from "../Inventory.ts";
 
 export class Warrior extends Character {
   constructor(
@@ -198,19 +199,27 @@ export class Thief extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  specialAttack(): void {
+  specialAttack(enemies: Character[], invent: Inventory): void {
     const item = Math.random() * 10;
     if (item <= 5) {
-      console.log("You stole an half star");
+      console.log("You stole a potion");
+      console.log(invent.items[0]);
+      invent.items[0].addQuantity();
     }
     else if (item > 5 && item <= 15) {
       console.log("You stole an ether");
+      console.log(invent.items[1]);
+      invent.items[1].addQuantity();
     }
     else if (item > 15 && item <= 30) {
-      console.log("You stole an star fragment");
+      console.log("You stole a star fragment");
+      console.log(invent.items[2]);
+      invent.items[2].addQuantity();
     }
     else if (item > 30 && item <= 60) {
-      console.log("You stole an potion");
+      console.log("You stole a potion");
+      console.log(invent.items[3]);
+      invent.items[3].addQuantity();
     }
     else {
       console.log("You stole nothing");
