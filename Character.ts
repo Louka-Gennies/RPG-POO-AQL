@@ -30,7 +30,7 @@ export default class Character {
 
   attack(enemies : Character[]): void {
     const phyAtk = this.physicalAttack;
-    const enemyNames = enemies.map((enemy) => `${enemy.name}`);
+    const enemyNames = enemies.map((enemy) => `${enemy.name}` + " " + enemy.showHp() + "\n");
     console.clear();
     const menu = new Menu("Choose a target: ", enemyNames);
     const target = menu.askQuestion();
