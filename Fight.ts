@@ -83,7 +83,7 @@ export default class Fight {
                 }
               case 2:
                 console.clear();
-                character.useItem(invent);
+                const item = character.useItem(invent);
                 await new Promise((r) => setTimeout(r, 1000));
                 break;
             }
