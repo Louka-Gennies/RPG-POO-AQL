@@ -96,8 +96,20 @@ export default class Character {
     }
   };
 
-  res(prcntHP: number ): void {
-    (this.maxHP / 100) * prcntHP;
+  res(prcntHP: number, allies: Character[]): void {
+    let choices: string[] = [];
+    for (let i = 0; i < allies.length; i++) {
+      if (allies[i].currentHP <= 0) {
+        choices.push(allies[i].name);
+      }
+    }
+    if (choices.length === 0) {
+      console.log("No one to revive");
+      return;
+    }
+    const menu = new Menu("Choose a character to revive: ", choices);
+    const target = menu.askQuestion();
+    allies[target].currentHP = (allies[target].maxHP / 100) * prcntHP;
   };
 
   actionMenu(): number {
