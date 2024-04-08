@@ -86,18 +86,18 @@ export default class Character {
     console.log("Special Attack");
   };
 
-  heal(prcntHP: number, maxHP: number, currentHP: number): number {
-    const addHP = (maxHP / 100) * prcntHP;
-    const health = currentHP + addHP;
-    if (health > maxHP) {
-      return maxHP;
+  heal(prcntHP: number): void {
+    const addHP = (this.maxHP / 100) * prcntHP;
+    const health = this.currentHP + addHP;
+    if (health > this.maxHP) {
+      this.currentHP = this.maxHP;
     } else {
-      return health;
+      this.currentHP = health;
     }
   };
 
-  res(prcntHP: number, maxHP: number): number {
-    return (maxHP / 100) * prcntHP;
+  res(prcntHP: number ): void {
+    (this.maxHP / 100) * prcntHP;
   };
 
   actionMenu(): number {
