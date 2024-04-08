@@ -1,47 +1,13 @@
 import Character from "./Character.ts";
-import {
-  Barbarian,
-  Mage,
-  Monster,
-  Paladin,
-  Priest,
-  Thief,
-  Warrior,
-} from "./class/Class.ts";
-import Fight from "./Fight.ts";
+import Room from "./Room.ts";
+import {Barbarian,Mage,Monster,Paladin,Priest,Thief,Warrior,} from "./class/Class.ts";;
 import Menu from "./Menu.ts";
-import chalk from "chalk";
+import Item from "./Item.ts";
+import Inventory from "./Inventory.ts";
 
 class gameManager {
   constructor() {
     console.log("Game Manager Created");
-  }
-
-  maxChar(a : string) : number {
-    // deno-lint-ignore no-control-regex
-    const noColor = a.replace(/\x1b\[[0-9;]*m/g, '');
-    return noColor.length;
-  }
-
-  stats(allies : Character[], monsters : Character[]) {
-    let maxLineLen = 0;
-    const spacing = 10;
-    for (let i = 0; i < allies.length; i++) {
-      const lineLength = this.maxChar(allies[i].showHp());
-      if (lineLength > maxLineLen) {
-        maxLineLen = lineLength;
-      }
-    }
-    console.log(chalk.hex("#1a67ed")("Heroes :") + " ".repeat(maxLineLen- 8 + spacing) + chalk.hex("#db2323")("Monsters :"));
-    for (let i = 0; i < allies.length; i++) {
-      let formatLine = allies[i].showHp();
-      const lineLength = this.maxChar(formatLine);
-      if (lineLength != maxLineLen) {
-        const spaces = maxLineLen - lineLength;
-        formatLine += " ".repeat(spaces);
-      }
-      console.log(formatLine + " ".repeat(spacing) + monsters[i].showHp());
-    }
   }
 
   async startGame() {
@@ -59,11 +25,22 @@ class gameManager {
     const alliesChoice = ["Warrior", "Mage", "Paladin", "Barbarian", "Thief", "Priest"];
     const allies: Character[] = [];
     
-    const monster1 = new Monster(10, 5, 5, 100, 100);
-    const monster2 = new Monster(5, 2, 10, 50, 50);
-    const monster3 = new Monster(7, 3, 7, 70, 70);
+    const monster1 = new Monster(10, 0, 5, 100, 20);
+    const monster2 = new Monster(5, 0, 10, 50, 20);
+    const monster3 = new Monster(7, 0, 7, 70, 20);
 
     const monsters = [monster1, monster2, monster3];
+
+    const potion = new Item("Potion", 2);
+    const ether = new Item("Ether", 1);
+    const starFragment = new Item("Star Fragment", 1);
+    const halfStar = new Item("Half Star", 0);
+
+    const inventory = new Inventory();
+    inventory.addItem(potion);
+    inventory.addItem(ether);
+    inventory.addItem(starFragment);
+    inventory.addItem(halfStar);
 
     while (allies.length < 3) {
       console.log("Your Team:\n");
@@ -163,7 +140,17 @@ class gameManager {
     console.log("Start of the fight !!!");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
-    this.stats(allies, monsters);
+    const room1 = new Room(allies, monsters, "chest");
+    const quit = await room1.enterRoom(inventory);
+    if (!quit) {
+      await new Promise((r) => setTimeout(r, 1000));
+      console.clear();
+    } else {
+      await new Promise((r) => setTimeout(r, 1000));
+      console.clear();
+      console.log("Game Over");
+    }
+
   }
 }
 
