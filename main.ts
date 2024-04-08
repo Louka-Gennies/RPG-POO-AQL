@@ -34,15 +34,15 @@ class gameManager {
     const boss = [boss1];
 
     const potion = new Item("Potion", 2);
-    const ether = new Item("Ether", 1);
     const starFragment = new Item("Star Fragment", 1);
     const halfStar = new Item("Half Star", 0);
+    const ether = new Item("Ether", 1);
 
     const inventory = new Inventory();
     inventory.addItem(potion);
-    inventory.addItem(ether);
     inventory.addItem(starFragment);
     inventory.addItem(halfStar);
+    inventory.addItem(ether);
 
     while (allies.length < 3) {
       console.log("Your Team:\n");
