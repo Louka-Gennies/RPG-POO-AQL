@@ -239,7 +239,7 @@ export class Monster extends Character {
       "Goblin",
       "Orc",
       "Troll",
-      "Dragon",
+      "Rat",
       "Wyvern",
       "Giant",
       "Golem",
@@ -283,16 +283,16 @@ export class Boss extends Character {
     currentHP: number,
   ) {
     const monsterName = [
-      "Goblin",
-      "Orc",
-      "Troll",
-      "Dragon",
-      "Wyvern",
-      "Giant",
-      "Golem",
-      "Slime",
-      "Skeleton",
-      "Zombie",
+      "Roi Goblin",
+      "Orc géant",
+      "Guillaume le Troll",
+      "Dragon du chaos",
+      "Ange déchue",
+      "Seigneur des Abysses",
+      "Colosse de Pierre",
+      "Maître des Ombres",
+      "l'Élu du Néant",
+      "?????????",
     ];
     const randomName = Math.floor(Math.random() * monsterName.length);
     const name = monsterName[randomName];
