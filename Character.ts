@@ -86,18 +86,30 @@ export default class Character {
     console.log("Special Attack");
   };
 
-  heal(prcntHP: number, maxHP: number, currentHP: number): number {
-    const addHP = (maxHP / 100) * prcntHP;
-    const health = currentHP + addHP;
-    if (health > maxHP) {
-      return maxHP;
+  heal(prcntHP: number): void {
+    const addHP = (this.maxHP / 100) * prcntHP;
+    const health = this.currentHP + addHP;
+    if (health > this.maxHP) {
+      this.currentHP = this.maxHP;
     } else {
-      return health;
+      this.currentHP = health;
     }
   };
 
-  res(prcntHP: number, maxHP: number): number {
-    return (maxHP / 100) * prcntHP;
+  res(prcntHP: number, allies: Character[]): void {
+    let choices: string[] = [];
+    for (let i = 0; i < allies.length; i++) {
+      if (allies[i].currentHP <= 0) {
+        choices.push(allies[i].name);
+      }
+    }
+    if (choices.length === 0) {
+      console.log("No one to revive");
+      return;
+    }
+    const menu = new Menu("Choose a character to revive: ", choices);
+    const target = menu.askQuestion();
+    allies[target].currentHP = (allies[target].maxHP / 100) * prcntHP;
   };
 
   actionMenu(): number {
