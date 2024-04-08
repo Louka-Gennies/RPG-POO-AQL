@@ -94,6 +94,18 @@ export class Mage extends Character {
       console.log(`${this.name} attacked ${enemies[target].name} with a magical attack for ${phyAtk} damage`);
     }
   }
+
+  rechargeMana(ManaPrcnt : number): void {
+    const addMana = (this.maxMana / 100) * ManaPrcnt;
+    const mana = this.currentMana + addMana;
+    if (mana > this.maxMana) {
+      this.currentMana = this.maxMana;
+      console.log(`${this.name} recovered ${this.maxMana - this.currentMana} mana`);
+    } else {
+      this.currentMana += addMana;
+      console.log(`${this.name} recovered ${addMana} mana`);
+    }
+  }
 }
 
 export class Paladin extends Character {
