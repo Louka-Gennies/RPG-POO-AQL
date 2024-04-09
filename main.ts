@@ -28,8 +28,10 @@ class gameManager {
     const monster1 = new Monster(10, 0, 5, 100, 20);
     const monster2 = new Monster(5, 0, 10, 50, 20);
     const monster3 = new Monster(7, 0, 7, 70, 20);
+    const boss1 = new Monster(15, 0, 10, 150, 50);
 
     const monsters = [monster1, monster2, monster3];
+    const boss = [boss1];
 
     const potion = new Item("Potion", 2);
     const starFragment = new Item("Star Fragment", 1);
@@ -140,9 +142,27 @@ class gameManager {
     console.log("Start of the fight !!!");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
-    const room1 = new Room(allies, monsters, "chest");
+    const room1 = new Room(allies, monsters, "fight");
+    const room2 = new Room(allies, monsters, "chest");
+    const room3 = new Room(allies, monsters, "fight");
+    const room4 = new Room(allies, monsters, "chest");
+    const room5 = new Room(allies, boss, "fight");
     const quit = await room1.enterRoom(inventory);
     if (!quit) {
+      await room2.enterRoom(inventory);
+    }
+    if (!quit) {
+      await room3.enterRoom(inventory);
+    }
+    if (!quit) {
+      await room4.enterRoom(inventory);
+    }
+    if (!quit) {
+      await room5.enterRoom(inventory);
+    }
+    if (!quit) {
+      console.clear();
+      console.log("All rooms cleared, you win!");
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();
     } else {
