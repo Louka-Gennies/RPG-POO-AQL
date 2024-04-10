@@ -133,18 +133,18 @@ class gameManager {
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
     
-    const monster1 = new Monster(10, 0, 5, 100, 20);
-    const monster2 = new Monster(5, 0, 10, 50, 20);
-    const monster3 = new Monster(7, 0, 7, 70, 20);
-    const monster4 = new Monster(10, 0, 5, 100, 20);
-    const monster5 = new Monster(5, 0, 10, 50, 20);
-    const monster6 = new Monster(7, 0, 7, 70, 20);
-    const monster7 = new Monster(10, 0, 5, 100, 20);
-    const monster8 = new Monster(5, 0, 10, 50, 20);
-    const monster9 = new Monster(7, 0, 7, 70, 20);
-    const monster10 = new Monster(10, 0, 5, 100, 20);
-    const monster11 = new Monster(5, 0, 10, 50, 20);
-    const monster12 = new Monster(7, 0, 7, 70, 20);
+    const monster1 = new Monster(10, 0, 5, 100, 1);
+    const monster2 = new Monster(5, 0, 10, 50, 1);
+    const monster3 = new Monster(7, 0, 7, 70, 1);
+    const monster4 = new Monster(10, 0, 5, 100, 1);
+    const monster5 = new Monster(5, 0, 10, 50, 1);
+    const monster6 = new Monster(7, 0, 7, 70, 1);
+    const monster7 = new Monster(10, 0, 5, 100, 1);
+    const monster8 = new Monster(5, 0, 10, 50, 1);
+    const monster9 = new Monster(7, 0, 7, 70, 1);
+    const monster10 = new Monster(10, 0, 5, 100, 1);
+    const monster11 = new Monster(5, 0, 10, 50, 1);
+    const monster12 = new Monster(7, 0, 7, 70, 1);
     
     const boss1 = new Monster(15, 0, 10, 150, 50);
 

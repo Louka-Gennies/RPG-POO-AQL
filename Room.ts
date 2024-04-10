@@ -14,13 +14,31 @@ export default class Room {
       this.event = event;
     }
 
-    eventManager() {
+    eventManager(allies : Character[]) {
         if (this.event === "chest") {
             console.log("You found a chest!");
             const menu = new Menu("Do you want to open it?", ["Yes", "No"]);
             const response = menu.askQuestion();
             if (response === 0) {
+                const alliesChoices : string[] = [];
+                for (let i = 0; i < allies.length; i++) {
+                    alliesChoices.push(allies[i].showHp());
+                }
+                 const menu = new Menu("Choose wich character will open the chest", alliesChoices)
+                const response = menu.askQuestion();
+                const character = allies[response];
+                const trappedChest = Math.random() < 0.99;
                 console.log("You open the chest!");
+                if (trappedChest) {
+                    console.clear();
+                    console.log("The chest was trapped! You lose 10 HP.");
+
+                    character.currentHP -= 10;
+                    console.log(character.showHp());
+
+                } else {
+                    console.log("You found an item!");
+                }
             } else {
                 console.log("You left the chest behind...");
             }
@@ -36,7 +54,7 @@ export default class Room {
         let quit = false;
         if (winOrLoose) {
             console.log("You win! All enemies are defeated.");
-            this.eventManager();
+            this.eventManager(this.allies);
             const menu = new Menu("Do you want to continue?", ["Yes", "No"]);
             const response = menu.askQuestion();
             if (response === 0) {
