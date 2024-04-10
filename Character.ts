@@ -1,7 +1,6 @@
 import chalk from "chalk";
 import Menu from "./Menu.ts"
 import Inventory from "./Inventory.ts";
-import Item from "./Item.ts";
 
 export default class Character {
   name: string;
@@ -30,7 +29,7 @@ export default class Character {
 
   attack(enemies : Character[]): void {
     const phyAtk = this.physicalAttack;
-    const enemyNames = enemies.map((enemy) => `${enemy.name}` + " " + enemy.showHp() + "\n");
+    const enemyNames = enemies.map((enemy) => enemy.showHp() + "\n");
     console.clear();
     const menu = new Menu("Choose a target: ", enemyNames);
     const target = menu.askQuestion();
@@ -148,9 +147,9 @@ export default class Character {
     }
     return `${hpBar}`;
   };
-
+  
   fullStats(): string {
-    return `${this.name} : ${this.physicalAttack} / ${this.physicalDefense} / ${this.speed} / ${this.maxHP} / ${this.currentHP}`;
+    return `${chalk.cyan(this.name)} :\n${chalk.yellow("⚔️  Physical Attack")} : ${this.physicalAttack} / ${chalk.blue("🛡️  Physical Defense")} : ${this.physicalDefense} / ${chalk.green("👟 Speed")} : ${this.speed} / ${chalk.red("❤️  Max HP")} : ${this.maxHP}`;
   };
 
   useItem(invent : Inventory): void {

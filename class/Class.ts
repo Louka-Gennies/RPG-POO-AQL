@@ -106,6 +106,11 @@ export class Mage extends Character {
       console.log(`${this.name} recovered ${addMana} mana`);
     }
   }
+
+  fullStats(): string {
+    return `${chalk.cyan(this.name)} :\n${chalk.yellow("⚔️  Physical Attack")} : ${this.physicalAttack} / ${chalk.blue("🛡️  Physical Defense")} : ${this.physicalDefense} / ${chalk.green("👟 Speed")} : ${this.speed} / ${chalk.red("❤️  Max HP")} : ${this.maxHP} / ${chalk.blueBright("🔮 Magic Attack")} : ${this.magicAttack} / ${chalk.cyanBright("💧 Max Mana")} : ${this.maxMana} / ${chalk.blue("💠 Mana Cost")} : 10`;
+  };
+
 }
 
 export class Paladin extends Character {

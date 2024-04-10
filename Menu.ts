@@ -20,12 +20,12 @@ export default class Menu {
       console.log("you have to choose a number");
       return this.askQuestion();
     } else if (
-      parseInt(userInput) > this.possibilities.length || parseInt(userInput) < 1
+      parseInt(userInput) > this.possibilities.length || parseInt(userInput) < 1 || isNaN(parseInt(userInput))
     ) {
       console.clear();
       console.log(
         "you have to choose a number between 1 and " +
-          this.possibilities.length,
+          this.possibilities.length + "\n",
       );
       return this.askQuestion();
     } else {

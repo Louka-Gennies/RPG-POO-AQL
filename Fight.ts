@@ -110,12 +110,6 @@ export default class Fight {
             this.ItemManager(character, invent);
             break;
           }
-        default:
-          console.clear();
-          console.log("You need to choose a Number between 1 and 4");
-          console.clear();
-          this.ItemManager(character, invent);
-          break;
     }
   }
 
@@ -124,7 +118,6 @@ export default class Fight {
             switch (action) {
               case 0:
                 character.attack(this.team2);
-                await new Promise((r) => setTimeout(r, 1000));
                 break;
               case 1:
                 if (character.name === "Priest") {
@@ -138,11 +131,6 @@ export default class Fight {
                 }
               case 2:
                 this.ItemManager(character, invent);
-                break;
-              default:
-                console.clear();
-                console.log("You need to choose a Number between 1 and 3\n");
-                this.ActionManager(character, team, invent);
                 break;
             }
   }
