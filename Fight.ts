@@ -44,7 +44,7 @@ export default class Fight {
 
   async ItemManager(character: Character, invent: Inventory) {
     console.clear();
-    const item = character.ItemMenu(invent);
+    const item = await character.ItemMenu(invent);
     switch (item) {
       case 0:
         invent.items[item].quantity -= 1;
@@ -57,9 +57,9 @@ export default class Fight {
         console.clear();
         const choicesFragment: string[] = [];
         for (let i = 0; i < this.team1.length; i++) {
-          choicesFragment.push(this.team1[i].name);
+          choicesFragment.push(this.team1[i].showHp() + "\n");
         }
-        const menuFragment = new Menu("Choose a character to revive: ", choicesFragment);
+        const menuFragment = new Menu("Choose a character to revive:\n", choicesFragment);
         const targetFragment = menuFragment.askQuestion();
         if (this.team1[targetFragment].currentHP > 0) {
           invent.items[item].quantity -= 1;
@@ -80,9 +80,9 @@ export default class Fight {
         console.clear();
         const choicesHalf: string[] = [];
         for (let i = 0; i < this.team1.length; i++) {
-          choicesHalf.push(this.team1[i].name);
+          choicesHalf.push(this.team1[i].showHp() + "\n");
         }
-        const menuHalf = new Menu("Choose a character to revive: ", choicesHalf);
+        const menuHalf = new Menu("Choose a character to revive:\n", choicesHalf);
         const targetHalf = menuHalf.askQuestion();
         if (this.team1[targetHalf].currentHP > 0) {
           invent.items[item].quantity -= 1;
@@ -159,6 +159,7 @@ export default class Fight {
           character.stats(team1Print, team2Print);
           if (this.team1.includes(character)) {
             this.ActionManager(character, this.team1, invent);
+            await new Promise((r) => setTimeout(r, 1000));
           } else {
             console.clear();
             character.attack(this.team1);

@@ -109,13 +109,22 @@ export default class Character {
     return menu.askQuestion();
   };
 
-  ItemMenu(invent : Inventory): number {
+  async ItemMenu(invent : Inventory): Promise<number> {
     const choices : string[] = [];
     for (let i = 0; i < invent.items.length; i++) {
       choices.push(invent.items[i].name + " x " + invent.items[i].quantity);
     }
     const menu = new Menu("Choose an item: ", choices);
-    return menu.askQuestion();
+    const resp = menu.askQuestion();
+    if (invent.items[resp].quantity === 0) {
+      console.clear();
+      console.log("You don't have any of this item left.");
+      await new Promise((r) => setTimeout(r, 1000));
+      console.clear();
+      return this.ItemMenu(invent);
+    } else {
+      return resp;
+    }
   };
 
   showHp(): string {
@@ -146,21 +155,5 @@ export default class Character {
       hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
     }
     return `${hpBar}`;
-  };
-  
-  fullStats(): string {
-    return `${chalk.cyan(this.name)} :\n${chalk.yellow("⚔️  Physical Attack")} : ${this.physicalAttack} / ${chalk.blue("🛡️  Physical Defense")} : ${this.physicalDefense} / ${chalk.green("👟 Speed")} : ${this.speed} / ${chalk.red("❤️  Max HP")} : ${this.maxHP}`;
-  };
-
-  useItem(invent : Inventory): void {
-    let index = this.ItemMenu(invent);
-    if (invent.items[index].quantity === 0) {
-        console.log("You don't have any of this item left.");
-        this.useItem(invent);
-    } else {
-        console.log(`You used ${invent.items[index].name}`);
-        invent.items[index].quantity -= 1;
-        invent.showItems();
-    }
   };
 };
