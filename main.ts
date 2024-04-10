@@ -10,11 +10,7 @@ class gameManager {
     console.log("Game Manager Created");
   }
 
-  async startGame() {
-    console.clear();
-    console.log("Game Started");
-    await new Promise((r) => setTimeout(r, 1000));
-    console.clear();
+  async CharacterMenu(): Promise<Character[]> {
     const warrior = new Warrior(10, 5, 5, 100, 100); // high attack and defense, no special attack, average speed
     const mage = new Mage(5, 2, 10, 50, 50, 40, 20, 20); // low physical attack and defense, has mana and magic attack
     const paladin = new Paladin(7, 3, 7, 70, 70); // lower attack than warrior, slightly higher defense, has holy attack
@@ -22,8 +18,120 @@ class gameManager {
     const thief = new Thief(5, 2, 10, 50, 50); // average defense and physical attack, high speed, has steal action
     const priest = new Priest(7, 3, 7, 70, 70); // low defense, slightly higher attack than mage, has heal action
 
-    const alliesChoice = ["Warrior", "Mage", "Paladin", "Barbarian", "Thief", "Priest"];
+    const heroes = [warrior, mage, paladin, barbarian, thief, priest];
+
+    const choices = ["Warrior", "Mage", "Paladin", "Barbarian", "Thief", "Priest", "Info", "Quit"];
     const allies: Character[] = [];
+
+    while (allies.length < 3) {
+      const charChoice = new Menu("Choose your character: ", choices);
+      const response = charChoice.askQuestion();
+      switch (response) {
+        case 0:
+          if (allies.includes(warrior)) {
+            console.clear();
+            console.log("You already chose this character");
+            await new Promise((r) => setTimeout(r, 1000));
+            break;
+          }
+          allies.push(warrior);
+          choices[response] = `\x1b[90m${choices[response]}\x1b[0m`;
+          console.clear();
+          console.log("You chose Warrior")
+          await new Promise((r) => setTimeout(r, 1000));
+          break;
+        case 1:
+          if (allies.includes(mage)) {
+            console.clear();
+            console.log("You already chose this character");
+            await new Promise((r) => setTimeout(r, 1000));
+            break;
+          }
+          allies.push(mage);
+          choices[response] = `\x1b[90m${choices[response]}\x1b[0m`;
+          console.clear();
+          console.log("You chose Mage")
+          await new Promise((r) => setTimeout(r, 1000));
+          break;
+        case 2:
+          if (allies.includes(paladin)) {
+            console.clear();
+            console.log("You already chose this character");
+            await new Promise((r) => setTimeout(r, 1000));
+            break;
+          }
+          allies.push(paladin);
+          choices[response] = `\x1b[90m${choices[response]}\x1b[0m`;
+          console.clear();
+          console.log("You chose Paladin")
+          await new Promise((r) => setTimeout(r, 1000));
+          break;
+        case 3:
+          if (allies.includes(barbarian)) {
+            console.clear();
+            console.log("You already chose this character");
+            await new Promise((r) => setTimeout(r, 1000));
+            break;
+          }
+          allies.push(barbarian);
+          choices[response] = `\x1b[90m${choices[response]}\x1b[0m`;
+          console.clear();
+          console.log("You chose Barbarian")
+          await new Promise((r) => setTimeout(r, 1000));
+          break;
+        case 4:
+          if (allies.includes(thief)) {
+            console.clear();
+            console.log("You already chose this character");
+            await new Promise((r) => setTimeout(r, 1000));
+            break;
+          }
+          allies.push(thief);
+          choices[response] = `\x1b[90m${choices[response]}\x1b[0m`;
+          console.clear();
+          console.log("You chose Thief")
+          await new Promise((r) => setTimeout(r, 1000));
+          break;
+        case 5:
+          if (allies.includes(priest)) {
+            console.clear();
+            console.log("You already chose this character");
+            await new Promise((r) => setTimeout(r, 1000));
+            break;
+          }
+          allies.push(priest);
+          choices[response] = `\x1b[90m${choices[response]}\x1b[0m`;
+          console.clear();
+          console.log("You chose Priest")
+          await new Promise((r) => setTimeout(r, 1000));
+          break;
+          case 6:
+            console.clear();
+            for (let i = 0; i < heroes.length; i++) {
+              console.log(`${i + 1}. ${heroes[i].fullStats()}\n`);
+            }
+
+            const answer = await prompt('Press enter to quit : ');
+            if (answer === '') {
+              console.clear();
+              break;
+            }
+          case 7:
+            console.clear();
+            console.log("You chose to quit");
+            await new Promise((r) => setTimeout(r, 1000));
+            Deno.exit();
+      }
+      console.clear();
+    }
+    return allies;
+  }
+
+  async startGame() {
+    console.clear();
+    console.log("Game Started");
+    await new Promise((r) => setTimeout(r, 1000));
+    console.clear();
     
     const monster1 = new Monster(10, 0, 5, 100, 20);
     const monster2 = new Monster(5, 0, 10, 50, 20);
@@ -44,101 +152,19 @@ class gameManager {
     inventory.addItem(halfStar);
     inventory.addItem(ether);
 
-    while (allies.length < 3) {
-      console.log("Your Team:\n");
-      for (let i = 0; i < allies.length; i++) {
-        console.log(`${i + 1}. ` + allies[i].showHp() + `\n`);
-      }
-      const charChoice = new Menu("Choose your character: ", alliesChoice);
-      const response = charChoice.askQuestion();
-      switch (response) {
-        case 0:
-          if (allies.includes(warrior)) {
-            console.clear();
-            console.log("You already chose this character");
-            await new Promise((r) => setTimeout(r, 1000));
-            break;
-          }
-          allies.push(warrior);
-          alliesChoice[response] = `\x1b[90m${alliesChoice[response]}\x1b[0m`;
-          console.clear();
-          console.log("You chose Warrior")
-          await new Promise((r) => setTimeout(r, 1000));
-          break;
-        case 1:
-          if (allies.includes(mage)) {
-            console.clear();
-            console.log("You already chose this character");
-            await new Promise((r) => setTimeout(r, 1000));
-            break;
-          }
-          allies.push(mage);
-          alliesChoice[response] = `\x1b[90m${alliesChoice[response]}\x1b[0m`;
-          console.clear();
-          console.log("You chose Mage")
-          await new Promise((r) => setTimeout(r, 1000));
-          break;
-        case 2:
-          if (allies.includes(paladin)) {
-            console.clear();
-            console.log("You already chose this character");
-            await new Promise((r) => setTimeout(r, 1000));
-            break;
-          }
-          allies.push(paladin);
-          alliesChoice[response] = `\x1b[90m${alliesChoice[response]}\x1b[0m`;
-          console.clear();
-          console.log("You chose Paladin")
-          await new Promise((r) => setTimeout(r, 1000));
-          break;
-        case 3:
-          if (allies.includes(barbarian)) {
-            console.clear();
-            console.log("You already chose this character");
-            await new Promise((r) => setTimeout(r, 1000));
-            break;
-          }
-          allies.push(barbarian);
-          alliesChoice[response] = `\x1b[90m${alliesChoice[response]}\x1b[0m`;
-          console.clear();
-          console.log("You chose Barbarian")
-          await new Promise((r) => setTimeout(r, 1000));
-          break;
-        case 4:
-          if (allies.includes(thief)) {
-            console.clear();
-            console.log("You already chose this character");
-            await new Promise((r) => setTimeout(r, 1000));
-            break;
-          }
-          allies.push(thief);
-          alliesChoice[response] = `\x1b[90m${alliesChoice[response]}\x1b[0m`;
-          console.clear();
-          console.log("You chose Thief")
-          await new Promise((r) => setTimeout(r, 1000));
-          break;
-        case 5:
-          if (allies.includes(priest)) {
-            console.clear();
-            console.log("You already chose this character");
-            await new Promise((r) => setTimeout(r, 1000));
-            break;
-          }
-          allies.push(priest);
-          alliesChoice[response] = `\x1b[90m${alliesChoice[response]}\x1b[0m`;
-          console.clear();
-          console.log("You chose Priest")
-          await new Promise((r) => setTimeout(r, 1000));
-          break;
-      }
-      console.clear();
-    }
+    const allies = await this.CharacterMenu();
+    console.clear();
+    
     console.log("Your Team:\n");
     for (let i = 0; i < allies.length; i++) {
       console.log(`${i + 1}. ` + allies[i].showHp() + `\n`);
     }
-    await new Promise((r) => setTimeout(r, 1000));
-    console.clear();
+    
+    const answer = await prompt('Press enter to continue : ');
+    if (answer === '') {
+      console.clear();
+    }
+
     console.log("Start of the fight !!!");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
