@@ -34,7 +34,7 @@ export default class Room {
         const rommfight = new Fight(this.allies, this.enemies);
         const winOrLoose = await rommfight.fight(invent);
         let quit = false;
-        if (await winOrLoose) {
+        if (winOrLoose) {
             console.log("You win! All enemies are defeated.");
             this.eventManager();
             const menu = new Menu("Do you want to continue?", ["Yes", "No"]);
