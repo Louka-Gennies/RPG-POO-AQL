@@ -142,29 +142,23 @@ class gameManager {
     console.log("Start of the fight !!!");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
-    const room1 = new Room(allies, monsters, "fight");
+    const room1 = new Room(allies, monsters, "");
     const room2 = new Room(allies, monsters, "chest");
-    const room3 = new Room(allies, monsters, "fight");
+    const room3 = new Room(allies, monsters, "");
     const room4 = new Room(allies, monsters, "chest");
-    const room5 = new Room(allies, boss, "fight");
-    const quit = await room1.enterRoom(inventory);
+    const room5 = new Room(allies, boss, "");
+    let quit = await room1.enterRoom(inventory);
     if (!quit) {
-      await room2.enterRoom(inventory);
+      quit = await room2.enterRoom(inventory);
     }
     if (!quit) {
-      await room3.enterRoom(inventory);
+      quit = await room3.enterRoom(inventory);
     }
     if (!quit) {
-      await room4.enterRoom(inventory);
+      quit = await room4.enterRoom(inventory);
     }
     if (!quit) {
-      await room5.enterRoom(inventory);
-    }
-    if (!quit) {
-      console.clear();
-      console.log("All rooms cleared, you win!");
-      await new Promise((r) => setTimeout(r, 1000));
-      console.clear();
+      quit = await room5.enterRoom(inventory);
     } else {
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();

@@ -32,7 +32,7 @@ export default class Room {
 
     async enterRoom(invent : Inventory) : Promise<boolean> {
         const rommfight = new Fight(this.allies, this.enemies);
-        const winOrLoose = rommfight.fight(invent);
+        const winOrLoose = await rommfight.fight(invent);
         let quit = false;
         if (await winOrLoose) {
             console.log("You win! All enemies are defeated.");
