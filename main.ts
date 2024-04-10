@@ -159,6 +159,7 @@ class gameManager {
     const starFragment = new Item("Star Fragment", 1);
     const halfStar = new Item("Half Star", 0);
     const ether = new Item("Ether", 1);
+    const itemList = [potion, starFragment, halfStar, ether];
 
     const inventory = new Inventory();
     inventory.addItem(potion);
@@ -182,11 +183,11 @@ class gameManager {
     console.log("Start of the fight !!!");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
-    const room1 = new Room(allies, monsters1, "");
-    const room2 = new Room(allies, monsters2, "chest");
-    const room3 = new Room(allies, monsters3, "");
-    const room4 = new Room(allies, monsters4, "chest");
-    const room5 = new Room(allies, boss, "");
+    const room1 = new Room(allies, monsters1, "", itemList);
+    const room2 = new Room(allies, monsters2, "chest", itemList);
+    const room3 = new Room(allies, monsters3, "", itemList);
+    const room4 = new Room(allies, monsters4, "chest", itemList);
+    const room5 = new Room(allies, boss, "", itemList);
     let quit = await room1.enterRoom(inventory);
     if (!quit) {
       quit = await room2.enterRoom(inventory);
