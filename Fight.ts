@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-case-declarations
 import Character from "./Character.ts";
 import { Mage } from "./class/Class.ts";
 import Inventory from "./Inventory.ts";

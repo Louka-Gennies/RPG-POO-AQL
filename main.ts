@@ -133,18 +133,33 @@ class gameManager {
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
     
-    const monster1 = new Monster(10, 0, 5, 100, 20);
-    const monster2 = new Monster(5, 0, 10, 50, 20);
-    const monster3 = new Monster(7, 0, 7, 70, 20);
+    const monster1 = new Monster(10, 0, 5, 100, 1);
+    const monster2 = new Monster(5, 0, 10, 50, 1);
+    const monster3 = new Monster(7, 0, 7, 70, 1);
+    const monster4 = new Monster(10, 0, 5, 100, 1);
+    const monster5 = new Monster(5, 0, 10, 50, 1);
+    const monster6 = new Monster(7, 0, 7, 70, 1);
+    const monster7 = new Monster(10, 0, 5, 100, 1);
+    const monster8 = new Monster(5, 0, 10, 50, 1);
+    const monster9 = new Monster(7, 0, 7, 70, 1);
+    const monster10 = new Monster(10, 0, 5, 100, 1);
+    const monster11 = new Monster(5, 0, 10, 50, 1);
+    const monster12 = new Monster(7, 0, 7, 70, 1);
+    
     const boss1 = new Monster(15, 0, 10, 150, 50);
 
-    const monsters = [monster1, monster2, monster3];
+    const monsters1 = [monster1, monster2, monster3];
+    const monsters2 = [monster4, monster5, monster6];
+    const monsters3 = [monster7, monster8, monster9];
+    const monsters4 = [monster10, monster11, monster12];
+
     const boss = [boss1];
 
     const potion = new Item("Potion", 2);
     const starFragment = new Item("Star Fragment", 1);
     const halfStar = new Item("Half Star", 0);
     const ether = new Item("Ether", 1);
+    const itemList = [potion, starFragment, halfStar, ether];
 
     const inventory = new Inventory();
     inventory.addItem(potion);
@@ -168,29 +183,23 @@ class gameManager {
     console.log("Start of the fight !!!");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
-    const room1 = new Room(allies, monsters, "fight");
-    const room2 = new Room(allies, monsters, "chest");
-    const room3 = new Room(allies, monsters, "fight");
-    const room4 = new Room(allies, monsters, "chest");
-    const room5 = new Room(allies, boss, "fight");
-    const quit = await room1.enterRoom(inventory);
+    const room1 = new Room(allies, monsters1, "", itemList);
+    const room2 = new Room(allies, monsters2, "chest", itemList);
+    const room3 = new Room(allies, monsters3, "", itemList);
+    const room4 = new Room(allies, monsters4, "chest", itemList);
+    const room5 = new Room(allies, boss, "", itemList);
+    let quit = await room1.enterRoom(inventory);
     if (!quit) {
-      await room2.enterRoom(inventory);
+      quit = await room2.enterRoom(inventory);
     }
     if (!quit) {
-      await room3.enterRoom(inventory);
+      quit = await room3.enterRoom(inventory);
     }
     if (!quit) {
-      await room4.enterRoom(inventory);
+      quit = await room4.enterRoom(inventory);
     }
     if (!quit) {
-      await room5.enterRoom(inventory);
-    }
-    if (!quit) {
-      console.clear();
-      console.log("All rooms cleared, you win!");
-      await new Promise((r) => setTimeout(r, 1000));
-      console.clear();
+      quit = await room5.enterRoom(inventory);
     } else {
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();
