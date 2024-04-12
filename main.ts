@@ -155,10 +155,10 @@ class gameManager {
 
     const boss = [boss1];
 
-    const potion = new Item("Potion", 2);
-    const starFragment = new Item("Star Fragment", 1);
-    const halfStar = new Item("Half Star", 0);
-    const ether = new Item("Ether", 1);
+    const potion = new Item("Potion", 2, 0);
+    const starFragment = new Item("Star Fragment", 1, 1);
+    const halfStar = new Item("Half Star", 0, 2);
+    const ether = new Item("Ether", 1, 3);
     const itemList = [potion, starFragment, halfStar, ether];
 
     const inventory = new Inventory();
@@ -187,11 +187,11 @@ class gameManager {
     console.log("Start of the fight !!!");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
-    const room1 = new Room(allies, monsters1, "", itemList);
-    const room2 = new Room(allies, monsters2, "chest", itemList);
-    const room3 = new Room(allies, monsters3, "", itemList);
-    const room4 = new Room(allies, monsters4, "chest", itemList);
-    const room5 = new Room(allies, boss, "", itemList);
+    const room1 = new Room(allies, monsters1, "chest", itemList, inventory);
+    const room2 = new Room(allies, monsters2, "chest", itemList, inventory);
+    const room3 = new Room(allies, monsters3, "", itemList, inventory);
+    const room4 = new Room(allies, monsters4, "chest", itemList, inventory);
+    const room5 = new Room(allies, boss, "", itemList, inventory);
     let quit = await room1.enterRoom(inventory);
     if (!quit) {
       console.clear();
