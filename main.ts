@@ -180,6 +180,10 @@ class gameManager {
       console.clear();
     }
 
+    console.log("You enter the First Room !!!");
+    await new Promise((r) => setTimeout(r, 1000));
+    console.clear();
+
     console.log("Start of the fight !!!");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
@@ -190,22 +194,97 @@ class gameManager {
     const room5 = new Room(allies, boss, "", itemList);
     let quit = await room1.enterRoom(inventory);
     if (!quit) {
+      console.clear();
+      console.log("Your Team:\n");
+      for (let i = 0; i < allies.length; i++) {
+        console.log(`${i + 1}. ` + allies[i].showHp() + `\n`);
+      }
+      
+      const answer = await prompt('Press enter to continue : ');
+      if (answer === '') {
+        console.clear();
+      }
+
+      console.log("You enter the Second Room !!!");
+      await new Promise((r) => setTimeout(r, 1000));
+      console.clear();
+  
+      console.log("Start of the fight !!!");
+      await new Promise((r) => setTimeout(r, 1000));
+      console.clear();
+
       quit = await room2.enterRoom(inventory);
     }
     if (!quit) {
+      console.clear();
+      console.log("Your Team:\n");
+      for (let i = 0; i < allies.length; i++) {
+        console.log(`${i + 1}. ` + allies[i].showHp() + `\n`);
+      }
+      
+      const answer = await prompt('Press enter to continue : ');
+      if (answer === '') {
+        console.clear();
+      }
+
+      console.log("You enter the Third Room !!!");
+      await new Promise((r) => setTimeout(r, 1000));
+      console.clear();
+  
+      console.log("Start of the fight !!!");
+      await new Promise((r) => setTimeout(r, 1000));
+      console.clear();
+
       quit = await room3.enterRoom(inventory);
     }
     if (!quit) {
+      console.clear();
+      console.log("Your Team:\n");
+      for (let i = 0; i < allies.length; i++) {
+        console.log(`${i + 1}. ` + allies[i].showHp() + `\n`);
+      }
+      
+      const answer = await prompt('Press enter to continue : ');
+      if (answer === '') {
+        console.clear();
+      }
+
+      console.log("You enter the Fourth Room !!!");
+      await new Promise((r) => setTimeout(r, 1000));
+      console.clear();
+  
+      console.log("Start of the fight !!!");
+      await new Promise((r) => setTimeout(r, 1000));
+      console.clear();
+
       quit = await room4.enterRoom(inventory);
     }
     if (!quit) {
+      console.clear();
+      console.log("Your Team:\n");
+      for (let i = 0; i < allies.length; i++) {
+        console.log(`${i + 1}. ` + allies[i].showHp() + `\n`);
+      }
+      
+      const answer = await prompt('Press enter to continue : ');
+      if (answer === '') {
+        console.clear();
+      }
+
+      console.log("You enter the Final Boss Room !!!");
+      await new Promise((r) => setTimeout(r, 1000));
+      console.clear();
+  
+      console.log("Start of the fight !!!");
+      await new Promise((r) => setTimeout(r, 1000));
+      console.clear();
+
       quit = await room5.enterRoom(inventory);
     } else {
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();
       console.log("Game Over");
     }
-
   }
 }
 

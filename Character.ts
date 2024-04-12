@@ -40,8 +40,9 @@ export default class Character {
       console.log(`${this.name} attacked ${enemies[target].name} for 0 damage`);
     } else if (enemies[target].currentHP - atk <= 0) {
       console.clear();
+      const difAtk = enemies[target].currentHP;
       enemies[target].currentHP = 0;
-      console.log(`${this.name} attacked ${enemies[target].name} for ${enemies[target].currentHP} damage and defeated him!`);
+      console.log(`${this.name} attacked ${enemies[target].name} for ${difAtk} damage and defeated him!`);
       enemies.splice(target, 1);
     } else {
       console.clear();

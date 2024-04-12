@@ -87,8 +87,10 @@ export class Mage extends Character {
     if (phyAtk < 0) {
       console.log(`${this.name} attacked ${enemies[target].name} with a magical attack for 0 damage`);
     } else if (enemies[target].currentHP - phyAtk < 0) {
+      const difAtk = enemies[target].currentHP;
       enemies[target].currentHP = 0;
-      console.log(`${this.name} attacked ${enemies[target].name} with a magical attack for ${enemies[target].currentHP} damage and defeated him!`);
+      console.log(`${this.name} attacked ${enemies[target].name} with a magical attack for ${difAtk} damage and defeated him!`);
+      enemies.splice(target, 1);
     } else {
       enemies[target].currentHP -= phyAtk;
       console.log(`${this.name} attacked ${enemies[target].name} with a magical attack for ${phyAtk} damage`);
@@ -128,14 +130,15 @@ export class Paladin extends Character {
   specialAttack(enemies : Character[]) : void {
     let totalAtk = 0;
     const phyAtk = this.physicalAttack;
-    for (let i = 0; i < enemies.length; i++) {
+    for (let i = enemies.length - 1; i >= 0; i--) {
       const phyDef = enemies[i].physicalDefense;
       const atk = Math.floor((phyAtk - phyDef) * 0.4);
       if (atk < 0) {
         totalAtk += 0;
       } else if (enemies[i].currentHP - atk < 0) {
-        enemies[i].currentHP = 0;
         totalAtk += enemies[i].currentHP;
+        enemies[i].currentHP = 0;
+        enemies.splice(i, 1);
       } else {
         enemies[i].currentHP -= atk;
         totalAtk += atk;
@@ -169,8 +172,10 @@ export class Barbarian extends Character {
     if (atk < 0) {
       console.log(`${this.name} attacked ${enemies[target].name} for 0 damage with his berserk attack but deal to himself ${selfAtk} damage`);
     } else if (enemies[target].currentHP - atk < 0) {
+      const difAtk = enemies[target].currentHP;
       enemies[target].currentHP = 0;
-      console.log(`${this.name} attacked ${enemies[target].name} for ${enemies[target].currentHP} damage and defeated him with his berserk attack but deal to himself ${selfAtk} damage`);
+      console.log(`${this.name} attacked ${enemies[target].name} for ${difAtk} damage and defeated him with his berserk attack but deal to himself ${selfAtk} damage`);
+      enemies.splice(target, 1);
     } else {
       enemies[target].currentHP -= atk;
       console.log(`${this.name} attacked ${enemies[target].name} for ${atk} damage with his berserk attack but deal to himself ${selfAtk} damage`);
@@ -281,8 +286,9 @@ export class Monster extends Character {
     if (atk <= 0) {
       console.log(`${this.name} attacked ${enemies[targetIndex].name} for 0 damage`);
     } else if (enemies[targetIndex].currentHP - atk <= 0) {
+      const difAtk = enemies[targetIndex].currentHP;
       enemies[targetIndex].currentHP = 0;
-      console.log(`${this.name} attacked ${enemies[targetIndex].name} for ${enemies[targetIndex].currentHP} damage and defeated him!`);
+      console.log(`${this.name} attacked ${enemies[targetIndex].name} for ${difAtk} damage and defeated him!`);
       enemies.splice(targetIndex, 1);
     } else {
       enemies[targetIndex].currentHP -= atk;
@@ -329,8 +335,9 @@ export class Boss extends Character {
       if (atk <= 0) {
         console.log(`${this.name} attacked ${enemies[targetIndex].name} for 0 damage`);
       } else if (enemies[targetIndex].currentHP - atk <= 0) {
+        const difAtk =  enemies[targetIndex].currentHP;
         enemies[targetIndex].currentHP = 0;
-        console.log(`${this.name} attacked ${enemies[targetIndex].name} for ${enemies[targetIndex].currentHP} damage and defeated him!`);
+        console.log(`${this.name} attacked ${enemies[targetIndex].name} for ${difAtk} damage and defeated him!`);
         enemies.splice(targetIndex, 1);
       } else {
         enemies[targetIndex].currentHP -= atk;
@@ -343,8 +350,9 @@ export class Boss extends Character {
         if (atk < 0) {
           totalAtk += 0;
         } else if (enemies[i].currentHP - atk < 0) {
-          enemies[i].currentHP = 0;
           totalAtk += enemies[i].currentHP;
+          enemies[i].currentHP = 0;
+          enemies.splice(i, 1);
         } else {
           enemies[i].currentHP -= atk;
           totalAtk += atk;
