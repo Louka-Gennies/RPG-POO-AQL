@@ -242,7 +242,7 @@ export class Priest extends Character {
     const alliesName = allies.map((allie) => `${allie.name}`);
     const menu = new Menu("Choose a target: ", alliesName);
     const target = menu.askQuestion();
-    const addHP = (allies[target].maxHP / 100) * 25;
+    const addHP = (allies[target].maxHP / 100) * 30;
     const health = allies[target].currentHP + addHP;
     if (health > allies[target].maxHP) {
       console.log(

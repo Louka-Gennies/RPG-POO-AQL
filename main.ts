@@ -20,12 +20,12 @@ class gameManager {
   }
 
   private async CharacterMenu(): Promise<Character[]> {
-    const warrior = new Warrior(10, 5, 5, 100, 100); // high attack and defense, no special attack, average speed
-    const mage = new Mage(5, 2, 10, 50, 50, 40, 20, 20); // low physical attack and defense, has mana and magic attack
-    const paladin = new Paladin(7, 3, 7, 70, 70); // lower attack than warrior, slightly higher defense, has holy attack
-    const barbarian = new Barbarian(10, 5, 5, 100, 100); // low defense, higher attack than warrior, has berserk attack
-    const thief = new Thief(5, 2, 10, 50, 50); // average defense and physical attack, high speed, has steal action
-    const priest = new Priest(7, 3, 7, 70, 70); // low defense, slightly higher attack than mage, has heal action
+    const warrior = new Warrior(20, 5, 5, 100, 100); // high attack and defense, no special attack, average speed
+    const mage = new Mage(10, 2, 10, 50, 50, 40, 20, 20); // low physical attack and defense, has mana and magic attack
+    const paladin = new Paladin(14, 3, 7, 70, 70); // lower attack than warrior, slightly higher defense, has holy attack
+    const barbarian = new Barbarian(20, 5, 5, 100, 100); // low defense, higher attack than warrior, has berserk attack
+    const thief = new Thief(10, 2, 10, 50, 50); // average defense and physical attack, high speed, has steal action
+    const priest = new Priest(14, 3, 7, 70, 70); // low defense, slightly higher attack than mage, has heal action
 
     const heroes = [warrior, mage, paladin, barbarian, thief, priest];
 
