@@ -52,7 +52,6 @@ export default class Character {
   };
 
   maxChar(a : string) : number {
-    // deno-lint-ignore no-control-regex
     const noColor = a.replace(/\x1b\[[0-9;]*m/g, '');
     return noColor.length;
   };
@@ -156,5 +155,9 @@ export default class Character {
       hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
     }
     return `${hpBar}`;
+  };
+
+  fullStats(): string {
+    return `${chalk.cyan(this.name)} :\n${chalk.yellow("⚔️  Physical Attack")} : ${this.physicalAttack} / ${chalk.blue("🛡️  Physical Defense")} : ${this.physicalDefense} / ${chalk.green("👟 Speed")} : ${this.speed} / ${chalk.red("❤️  Max HP")} : ${this.maxHP}`;
   };
 };

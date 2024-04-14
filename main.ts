@@ -127,33 +127,58 @@ class gameManager {
     return allies;
   }
 
+  generateMonster() {
+    const minHealth = 25;
+    const maxHealth = 50;
+    const minAttack = 5;
+    const maxAttack = 10;
+    const minDefense = 0;
+    const maxDefense = 5;
+    const minSpeed = 5;
+    const maxSpeed = 10;
+
+  
+    const health = Math.floor(Math.random() * (maxHealth - minHealth + 1)) + minHealth;
+    const attack = Math.floor(Math.random() * (maxAttack - minAttack + 1)) + minAttack;
+    const defense = Math.floor(Math.random() * (maxDefense - minDefense + 1)) + minDefense;
+    const speed = Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed;
+  
+    return new Monster(attack, defense, speed, health, health);
+  }
+
+  generateBoss() {
+    const minHealth = 75;
+    const maxHealth = 100;
+    const minAttack = 10;
+    const maxAttack = 20;
+    const minDefense = 4;
+    const maxDefense = 5;
+    const minSpeed = 10;
+    const maxSpeed = 15;
+
+  
+    const health = Math.floor(Math.random() * (maxHealth - minHealth + 1)) + minHealth;
+    const attack = Math.floor(Math.random() * (maxAttack - minAttack + 1)) + minAttack;
+    const defense = Math.floor(Math.random() * (maxDefense - minDefense + 1)) + minDefense;
+    const speed = Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed;
+  
+    return new Monster(attack, defense, speed, health, health);
+  }
+
   async startGame() {
     console.clear();
     console.log("Game Started");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
     
-    const monster1 = new Monster(10, 0, 5, 100, 1);
-    const monster2 = new Monster(5, 0, 10, 50, 1);
-    const monster3 = new Monster(7, 0, 7, 70, 1);
-    const monster4 = new Monster(10, 0, 5, 100, 1);
-    const monster5 = new Monster(5, 0, 10, 50, 1);
-    const monster6 = new Monster(7, 0, 7, 70, 1);
-    const monster7 = new Monster(10, 0, 5, 100, 1);
-    const monster8 = new Monster(5, 0, 10, 50, 1);
-    const monster9 = new Monster(7, 0, 7, 70, 1);
-    const monster10 = new Monster(10, 0, 5, 100, 1);
-    const monster11 = new Monster(5, 0, 10, 50, 1);
-    const monster12 = new Monster(7, 0, 7, 70, 1);
-    
     const boss1 = new Monster(15, 0, 10, 150, 50);
 
-    const monsters1 = [monster1, monster2, monster3];
-    const monsters2 = [monster4, monster5, monster6];
-    const monsters3 = [monster7, monster8, monster9];
-    const monsters4 = [monster10, monster11, monster12];
+    const MonsterRoom1 = Array.from({length: 3}, this.generateMonster);
+    const MonsterRoom2 = Array.from({length: 3}, this.generateMonster);
+    const MonsterRoom3 = Array.from({length: 3}, this.generateMonster);
+    const MonsterRoom4 = Array.from({length: 3}, this.generateMonster);
 
-    const boss = [boss1];
+    const bossRoomMonster = [this.generateBoss()];
 
     const potion = new Item("Potion", 2, 0);
     const starFragment = new Item("Star Fragment", 1, 1);
@@ -187,11 +212,11 @@ class gameManager {
     console.log("Start of the fight !!!");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
-    const room1 = new Room(allies, monsters1, "chest", itemList, inventory);
-    const room2 = new Room(allies, monsters2, "chest", itemList, inventory);
-    const room3 = new Room(allies, monsters3, "", itemList, inventory);
-    const room4 = new Room(allies, monsters4, "chest", itemList, inventory);
-    const room5 = new Room(allies, boss, "", itemList, inventory);
+    const room1 = new Room(allies, MonsterRoom1, "", itemList, inventory);
+    const room2 = new Room(allies, MonsterRoom2, "chest", itemList, inventory);
+    const room3 = new Room(allies, MonsterRoom3, "", itemList, inventory);
+    const room4 = new Room(allies, MonsterRoom4, "chest", itemList, inventory);
+    const bossRoom = new Room(allies, bossRoomMonster, "", itemList, inventory);
     let quit = await room1.enterRoom(inventory);
     if (!quit) {
       console.clear();
@@ -279,7 +304,13 @@ class gameManager {
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();
 
-      quit = await room5.enterRoom(inventory);
+      quit = await bossRoom.enterRoom(inventory);
+    }
+    if (!quit) {
+      console.clear();
+      console.log("You Win !!!");
+      await new Promise((r) => setTimeout(r, 1000));
+      Deno.exit();
     } else {
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();

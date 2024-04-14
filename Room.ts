@@ -34,12 +34,12 @@ export default class Room {
                 console.clear();
                 const menu = new Menu("Choose wich character will open the chest", alliesChoices)
                 const response = menu.askQuestion();
-                await new Promise((r) => setTimeout(r, 1000));
                 const character = allies[response];
-                const trappedChest = Math.random() < 0.001;
+                const trappedChest = Math.random();
+                console.clear();
                 console.log("You open the chest!");
                 await new Promise((r) => setTimeout(r, 1000));
-                if (trappedChest) {
+                if (trappedChest <= 0.4) {
                     console.clear();
                     console.log("The chest was trapped! You lose 10 HP.\n");
 
@@ -48,17 +48,24 @@ export default class Room {
                     await new Promise((r) => setTimeout(r, 1000));
 
                 } else { 
-                    const itemDuplicate = Math.random() <= 0.01;
-                    if (itemDuplicate){
+                    const itemDuplicate = Math.random();
+                    if (itemDuplicate <= 0.5){
 
                         const randomItem = this.itemList[Math.floor(Math.random() * this.itemList.length)];
-                        console.log("You found items: 2 " + randomItem.name);
+                        console.clear();
+                        console.log("You found two items: 2 " + randomItem.name + "\n");
+                        await new Promise((r) => setTimeout(r, 1000));
                         const itemId = randomItem.getId();
                         if (!this.invent.items[itemId]) {
                             this.invent.addItem(randomItem);
                         }
                         this.invent.items[itemId].addQuantity();
                         this.invent.items[itemId].addQuantity();
+
+                        const answer = await prompt('Press enter to continue : ');
+                        if (answer === '') {
+                            console.clear();
+                        }
 
 
                     }else{
@@ -70,10 +77,16 @@ export default class Room {
                         const firstItemId = firstRandomItem.getId();
                         const secondItemId = secondRandomItem.getId();
 
-                        console.log("You found an item: " + firstRandomItem.name + " and " + secondRandomItem.name);
+                        console.clear();
+                        console.log("You found two items: " + firstRandomItem.name + " and " + secondRandomItem.name + "\n");
+                        await new Promise((r) => setTimeout(r, 1000));
                         this.invent.items[firstItemId].addQuantity();
                         this.invent.items[secondItemId].addQuantity();
-                        await new Promise((r) => setTimeout(r, 4000));
+
+                        const answer = await prompt('Press enter to continue : ');
+                        if (answer === '') {
+                            console.clear();
+                        }
                     }
                 }
             } else {
