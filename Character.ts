@@ -92,7 +92,10 @@ export default class Character {
     }
   }
 
-  public specialAttack(enemies: Character[] | null, invent: Inventory | null): void {
+  public specialAttack(
+    enemies: Character[] | null,
+    invent: Inventory | null,
+  ): void {
     console.log("Special Attack");
   }
 

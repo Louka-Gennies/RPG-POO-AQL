@@ -188,7 +188,7 @@ class gameManager {
     return new Monster(attack, defense, speed, health, health);
   }
 
-  public  async startGame() {
+  public async startGame() {
     console.clear();
     console.log("Game Started");
     await new Promise((r) => setTimeout(r, 1000));
