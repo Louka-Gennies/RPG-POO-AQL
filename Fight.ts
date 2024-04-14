@@ -38,11 +38,6 @@ export default class Fight {
     return team1.length === 0 && team2.length > 0;
   }
 
-  private characterDeath(character: Character, team: Character[]) {
-    const index = team.indexOf(character);
-    team.splice(index, 1);
-  }
-
   private async ItemManager(character: Character, invent: Inventory) {
     console.clear();
     const item = await character.ItemMenu(invent);
