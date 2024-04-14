@@ -12,23 +12,39 @@ Les choix du joueur se feront à travers des menus en ligne de commande.
 
 ## Lancer le programme
 
-Il y a un fichier.bat, il faut juste le lancer ca ouvrira un invite de commande est vous pourrais jouer au jeux.
+Il y a un fichier .bat, il faut juste le lancer, cela ouvrira une invite de commande et vous pourrez jouer au jeu.
 
-Si vous ne pouvez pas le lancer de cette  maniere il faudras installer Deno 
+Si vous ne pouvez pas le lancer de cette manière, il faudra installer Deno.
 
-Windows (Powershell):
+### Windows (Powershell):
+
 ```
 irm https://deno.land/install.ps1 | iex
 ```
 
-Linux (Using Shell):
+### Linux (Using Shell):
 
 ```
 curl -fsSL https://deno.land/install.sh | sh
 ```
 
-MacOS (Using Shell):
+### MacOS (Using Shell):
 
 ```
 curl -fsSL https://deno.land/install.sh | sh
 ```
+
+Ensuite, il faudra lancer le programme avec la commande suivante :
+
+
+```
+deno run --allow-env main.ts
+```
+
+## Fonctionnalité : Interaction joueur
+
+Le programme fonctionne en affichant une série de questions ou de menus numérotés. Le joueur doit alors choisir une option en saisissant le numéro correspondant via le clavier.
+
+## Langage utilisé
+
+TypeScript uniquement
