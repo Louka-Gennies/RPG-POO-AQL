@@ -12,6 +12,7 @@ import {
 import Menu from "./Menu.ts";
 import Item from "./Item.ts";
 import Inventory from "./Inventory.ts";
+import { exit } from "deno";
 
 class gameManager {
   constructor() {
@@ -137,7 +138,7 @@ class gameManager {
           console.clear();
           console.log("You chose to quit");
           await new Promise((r) => setTimeout(r, 1000));
-          Deno.exit();
+          process.exit();
       }
       console.clear();
     }
@@ -333,7 +334,7 @@ class gameManager {
       console.clear();
       console.log("You Win !!!");
       await new Promise((r) => setTimeout(r, 1000));
-      Deno.exit();
+      process.exit();
     } else {
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();

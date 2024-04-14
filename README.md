@@ -18,25 +18,25 @@ Si vous ne pouvez pas le lancer de cette manière, il faudra installer Deno.
 
 ### Windows (Powershell)
 
-```
+```C
 irm https://deno.land/install.ps1 | iex
 ```
 
 ### Linux (Using Shell)
 
-```
+```C
 curl -fsSL https://deno.land/install.sh | sh
 ```
 
 ### MacOS (Using Shell)
 
-```
+```C
 curl -fsSL https://deno.land/install.sh | sh
 ```
 
 Ensuite, il faudra lancer le programme avec la commande suivante :
 
-```
+```C
 deno run --allow-env main.ts
 ```
 
