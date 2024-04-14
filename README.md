@@ -1,6 +1,6 @@
-#RPG-POO-AQL
+# RPG-POO-AQL
 
-##Objectif du devoir
+## Objectif du devoir
 
 Le but de ce projet est de vous faire travailler et évaluer les concepts de programmation orientée objet vus au cours du projet.
 
