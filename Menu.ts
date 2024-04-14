@@ -20,7 +20,8 @@ export default class Menu {
       console.log("you have to choose a number");
       return this.askQuestion();
     } else if (
-      parseInt(userInput) > this.possibilities.length || parseInt(userInput) < 1 || isNaN(parseInt(userInput))
+      parseInt(userInput) > this.possibilities.length ||
+      parseInt(userInput) < 1 || isNaN(parseInt(userInput))
     ) {
       console.clear();
       console.log(
@@ -34,4 +35,3 @@ export default class Menu {
     }
   }
 }
-

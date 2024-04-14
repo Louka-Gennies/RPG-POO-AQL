@@ -1,4 +1,4 @@
 {
   "deno.enable": true,
-  "github.copilot.chat.welcomeMessage": "first",
+  "github.copilot.chat.welcomeMessage": "first"
 }

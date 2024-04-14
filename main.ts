@@ -1,6 +1,14 @@
 import Character from "./Character.ts";
 import Room from "./Room.ts";
-import {Barbarian,Mage,Monster,Paladin,Priest,Thief,Warrior,} from "./class/Class.ts";;
+import {
+  Barbarian,
+  Mage,
+  Monster,
+  Paladin,
+  Priest,
+  Thief,
+  Warrior,
+} from "./class/Class.ts";
 import Menu from "./Menu.ts";
 import Item from "./Item.ts";
 import Inventory from "./Inventory.ts";
@@ -20,7 +28,16 @@ class gameManager {
 
     const heroes = [warrior, mage, paladin, barbarian, thief, priest];
 
-    const choices = ["Warrior", "Mage", "Paladin", "Barbarian", "Thief", "Priest", "Info", "Quit"];
+    const choices = [
+      "Warrior",
+      "Mage",
+      "Paladin",
+      "Barbarian",
+      "Thief",
+      "Priest",
+      "Info",
+      "Quit",
+    ];
     const allies: Character[] = [];
 
     while (allies.length < 3) {
@@ -37,7 +54,7 @@ class gameManager {
           allies.push(warrior);
           choices[response] = `\x1b[90m${choices[response]}\x1b[0m`;
           console.clear();
-          console.log("You chose Warrior")
+          console.log("You chose Warrior");
           await new Promise((r) => setTimeout(r, 1000));
           break;
         case 1:
@@ -50,7 +67,7 @@ class gameManager {
           allies.push(mage);
           choices[response] = `\x1b[90m${choices[response]}\x1b[0m`;
           console.clear();
-          console.log("You chose Mage")
+          console.log("You chose Mage");
           await new Promise((r) => setTimeout(r, 1000));
           break;
         case 2:
@@ -63,7 +80,7 @@ class gameManager {
           allies.push(paladin);
           choices[response] = `\x1b[90m${choices[response]}\x1b[0m`;
           console.clear();
-          console.log("You chose Paladin")
+          console.log("You chose Paladin");
           await new Promise((r) => setTimeout(r, 1000));
           break;
         case 3:
@@ -76,7 +93,7 @@ class gameManager {
           allies.push(barbarian);
           choices[response] = `\x1b[90m${choices[response]}\x1b[0m`;
           console.clear();
-          console.log("You chose Barbarian")
+          console.log("You chose Barbarian");
           await new Promise((r) => setTimeout(r, 1000));
           break;
         case 4:
@@ -89,7 +106,7 @@ class gameManager {
           allies.push(thief);
           choices[response] = `\x1b[90m${choices[response]}\x1b[0m`;
           console.clear();
-          console.log("You chose Thief")
+          console.log("You chose Thief");
           await new Promise((r) => setTimeout(r, 1000));
           break;
         case 5:
@@ -102,25 +119,25 @@ class gameManager {
           allies.push(priest);
           choices[response] = `\x1b[90m${choices[response]}\x1b[0m`;
           console.clear();
-          console.log("You chose Priest")
+          console.log("You chose Priest");
           await new Promise((r) => setTimeout(r, 1000));
           break;
-          case 6:
-            console.clear();
-            for (let i = 0; i < heroes.length; i++) {
-              console.log(`${i + 1}. ${heroes[i].fullStats()}\n`);
-            }
+        case 6:
+          console.clear();
+          for (let i = 0; i < heroes.length; i++) {
+            console.log(`${i + 1}. ${heroes[i].fullStats()}\n`);
+          }
 
-            const answer = await prompt('Press enter to quit : ');
-            if (answer === '') {
-              console.clear();
-              break;
-            }
-          case 7:
+          const answer = await prompt("Press enter to quit : ");
+          if (answer === "") {
             console.clear();
-            console.log("You chose to quit");
-            await new Promise((r) => setTimeout(r, 1000));
-            Deno.exit();
+            break;
+          }
+        case 7:
+          console.clear();
+          console.log("You chose to quit");
+          await new Promise((r) => setTimeout(r, 1000));
+          Deno.exit();
       }
       console.clear();
     }
@@ -137,12 +154,15 @@ class gameManager {
     const minSpeed = 5;
     const maxSpeed = 10;
 
-  
-    const health = Math.floor(Math.random() * (maxHealth - minHealth + 1)) + minHealth;
-    const attack = Math.floor(Math.random() * (maxAttack - minAttack + 1)) + minAttack;
-    const defense = Math.floor(Math.random() * (maxDefense - minDefense + 1)) + minDefense;
-    const speed = Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed;
-  
+    const health = Math.floor(Math.random() * (maxHealth - minHealth + 1)) +
+      minHealth;
+    const attack = Math.floor(Math.random() * (maxAttack - minAttack + 1)) +
+      minAttack;
+    const defense = Math.floor(Math.random() * (maxDefense - minDefense + 1)) +
+      minDefense;
+    const speed = Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) +
+      minSpeed;
+
     return new Monster(attack, defense, speed, health, health);
   }
 
@@ -156,12 +176,15 @@ class gameManager {
     const minSpeed = 10;
     const maxSpeed = 15;
 
-  
-    const health = Math.floor(Math.random() * (maxHealth - minHealth + 1)) + minHealth;
-    const attack = Math.floor(Math.random() * (maxAttack - minAttack + 1)) + minAttack;
-    const defense = Math.floor(Math.random() * (maxDefense - minDefense + 1)) + minDefense;
-    const speed = Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed;
-  
+    const health = Math.floor(Math.random() * (maxHealth - minHealth + 1)) +
+      minHealth;
+    const attack = Math.floor(Math.random() * (maxAttack - minAttack + 1)) +
+      minAttack;
+    const defense = Math.floor(Math.random() * (maxDefense - minDefense + 1)) +
+      minDefense;
+    const speed = Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) +
+      minSpeed;
+
     return new Monster(attack, defense, speed, health, health);
   }
 
@@ -170,13 +193,13 @@ class gameManager {
     console.log("Game Started");
     await new Promise((r) => setTimeout(r, 1000));
     console.clear();
-    
+
     const boss1 = new Monster(15, 0, 10, 150, 50);
 
-    const MonsterRoom1 = Array.from({length: 3}, this.generateMonster);
-    const MonsterRoom2 = Array.from({length: 3}, this.generateMonster);
-    const MonsterRoom3 = Array.from({length: 3}, this.generateMonster);
-    const MonsterRoom4 = Array.from({length: 3}, this.generateMonster);
+    const MonsterRoom1 = Array.from({ length: 3 }, this.generateMonster);
+    const MonsterRoom2 = Array.from({ length: 3 }, this.generateMonster);
+    const MonsterRoom3 = Array.from({ length: 3 }, this.generateMonster);
+    const MonsterRoom4 = Array.from({ length: 3 }, this.generateMonster);
 
     const bossRoomMonster = [this.generateBoss()];
 
@@ -194,14 +217,14 @@ class gameManager {
 
     const allies = await this.CharacterMenu();
     console.clear();
-    
+
     console.log("Your Team:\n");
     for (let i = 0; i < allies.length; i++) {
       console.log(`${i + 1}. ` + allies[i].showHp() + `\n`);
     }
-    
-    const answer = await prompt('Press enter to continue : ');
-    if (answer === '') {
+
+    const answer = await prompt("Press enter to continue : ");
+    if (answer === "") {
       console.clear();
     }
 
@@ -224,16 +247,16 @@ class gameManager {
       for (let i = 0; i < allies.length; i++) {
         console.log(`${i + 1}. ` + allies[i].showHp() + `\n`);
       }
-      
-      const answer = await prompt('Press enter to continue : ');
-      if (answer === '') {
+
+      const answer = await prompt("Press enter to continue : ");
+      if (answer === "") {
         console.clear();
       }
 
       console.log("You enter the Second Room !!!");
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();
-  
+
       console.log("Start of the fight !!!");
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();
@@ -246,16 +269,16 @@ class gameManager {
       for (let i = 0; i < allies.length; i++) {
         console.log(`${i + 1}. ` + allies[i].showHp() + `\n`);
       }
-      
-      const answer = await prompt('Press enter to continue : ');
-      if (answer === '') {
+
+      const answer = await prompt("Press enter to continue : ");
+      if (answer === "") {
         console.clear();
       }
 
       console.log("You enter the Third Room !!!");
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();
-  
+
       console.log("Start of the fight !!!");
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();
@@ -268,16 +291,16 @@ class gameManager {
       for (let i = 0; i < allies.length; i++) {
         console.log(`${i + 1}. ` + allies[i].showHp() + `\n`);
       }
-      
-      const answer = await prompt('Press enter to continue : ');
-      if (answer === '') {
+
+      const answer = await prompt("Press enter to continue : ");
+      if (answer === "") {
         console.clear();
       }
 
       console.log("You enter the Fourth Room !!!");
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();
-  
+
       console.log("Start of the fight !!!");
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();
@@ -290,16 +313,16 @@ class gameManager {
       for (let i = 0; i < allies.length; i++) {
         console.log(`${i + 1}. ` + allies[i].showHp() + `\n`);
       }
-      
-      const answer = await prompt('Press enter to continue : ');
-      if (answer === '') {
+
+      const answer = await prompt("Press enter to continue : ");
+      if (answer === "") {
         console.clear();
       }
 
       console.log("You enter the Final Boss Room !!!");
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();
-  
+
       console.log("Start of the fight !!!");
       await new Promise((r) => setTimeout(r, 1000));
       console.clear();

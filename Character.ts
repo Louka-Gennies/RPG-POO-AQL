@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import Menu from "./Menu.ts"
+import Menu from "./Menu.ts";
 import Inventory from "./Inventory.ts";
 
 export default class Character {
@@ -27,7 +27,7 @@ export default class Character {
     this.currentHP = currentHP;
   }
 
-  attack(enemies : Character[]): void {
+  attack(enemies: Character[]): void {
     const phyAtk = this.physicalAttack;
     const enemyNames = enemies.map((enemy) => enemy.showHp() + "\n");
     console.clear();
@@ -42,21 +42,27 @@ export default class Character {
       console.clear();
       const difAtk = enemies[target].currentHP;
       enemies[target].currentHP = 0;
-      console.log(`${this.name} attacked ${enemies[target].name} for ${difAtk} damage and defeated him!`);
+      console.log(
+        `${this.name} attacked ${
+          enemies[target].name
+        } for ${difAtk} damage and defeated him!`,
+      );
       enemies.splice(target, 1);
     } else {
       console.clear();
       enemies[target].currentHP -= atk;
-      console.log(`${this.name} attacked ${enemies[target].name} for ${atk} damage`);
+      console.log(
+        `${this.name} attacked ${enemies[target].name} for ${atk} damage`,
+      );
     }
-  };
+  }
 
-  maxChar(a : string) : number {
-    const noColor = a.replace(/\x1b\[[0-9;]*m/g, '');
+  maxChar(a: string): number {
+    const noColor = a.replace(/\x1b\[[0-9;]*m/g, "");
     return noColor.length;
-  };
+  }
 
-  stats(allies : Character[], monsters : Character[]) {
+  stats(allies: Character[], monsters: Character[]) {
     let maxLineLen = 0;
     const spacing = 10;
     for (let i = 0; i < allies.length; i++) {
@@ -65,7 +71,10 @@ export default class Character {
         maxLineLen = lineLength;
       }
     }
-    console.log(chalk.hex("#1a67ed")("Heroes :") + " ".repeat(maxLineLen- 8 + spacing) + chalk.hex("#db2323")("Monsters :") + "\n");
+    console.log(
+      chalk.hex("#1a67ed")("Heroes :") + " ".repeat(maxLineLen - 8 + spacing) +
+        chalk.hex("#db2323")("Monsters :") + "\n",
+    );
     for (let i = 0; i < allies.length; i++) {
       let formatLine = allies[i].showHp();
       const lineLength = this.maxChar(formatLine);
@@ -74,16 +83,18 @@ export default class Character {
         formatLine += " ".repeat(spaces);
       }
       if (monsters[i]) {
-        console.log(formatLine + " ".repeat(spacing) + monsters[i].showHp() + "\n");
+        console.log(
+          formatLine + " ".repeat(spacing) + monsters[i].showHp() + "\n",
+        );
       } else {
         console.log(formatLine + "\n");
       }
     }
-  };
+  }
 
-  specialAttack(enemies : Character[] | null, invent : Inventory | null): void {
+  specialAttack(enemies: Character[] | null, invent: Inventory | null): void {
     console.log("Special Attack");
-  };
+  }
 
   heal(prcntHP: number): number {
     const addHP = (this.maxHP / 100) * prcntHP;
@@ -95,22 +106,22 @@ export default class Character {
       this.currentHP = health;
       return addHP;
     }
-  };
+  }
 
   res(prcntHP: number): number {
     let choices: string[] = [];
     this.currentHP = (this.maxHP / 100) * prcntHP;
     return this.currentHP;
-  };
+  }
 
   actionMenu(): number {
     const choices = ["Attack", "Special Attack", "Use Item"];
     const menu = new Menu("Choose an action: ", choices);
     return menu.askQuestion();
-  };
+  }
 
-  async ItemMenu(invent : Inventory): Promise<number> {
-    const choices : string[] = [];
+  async ItemMenu(invent: Inventory): Promise<number> {
+    const choices: string[] = [];
     for (let i = 0; i < invent.items.length; i++) {
       choices.push(invent.items[i].name + " x " + invent.items[i].quantity);
     }
@@ -125,12 +136,12 @@ export default class Character {
     } else {
       return resp;
     }
-  };
+  }
 
   showHp(): string {
     const totalBars = 20;
     const hpPerBar = this.maxHP / totalBars;
-    let filledBars = totalBars
+    let filledBars = totalBars;
     if (this.currentHP <= 0) {
       filledBars = 0;
     } else {
@@ -148,16 +159,25 @@ export default class Character {
       filledBarsString = chalk.hex("#33FF33")("█".repeat(filledBars));
     }
     const emptyBarsString = chalk.gray("█".repeat(emptyBars));
-    let hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
+    let hpBar =
+      `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
     if (this.active) {
-      hpBar = chalk.hex("#00ffdd")(`${this.name}`) + ` : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
+      hpBar = chalk.hex("#00ffdd")(`${this.name}`) +
+        ` : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
     } else {
-      hpBar = `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
+      hpBar =
+        `${this.name} : [${filledBarsString}${emptyBarsString}] (${this.currentHP}/${this.maxHP})`;
     }
     return `${hpBar}`;
-  };
+  }
 
   fullStats(): string {
-    return `${chalk.cyan(this.name)} :\n${chalk.yellow("⚔️  Physical Attack")} : ${this.physicalAttack} / ${chalk.blue("🛡️  Physical Defense")} : ${this.physicalDefense} / ${chalk.green("👟 Speed")} : ${this.speed} / ${chalk.red("❤️  Max HP")} : ${this.maxHP}`;
-  };
-};
+    return `${chalk.cyan(this.name)} :\n${
+      chalk.yellow("⚔️  Physical Attack")
+    } : ${this.physicalAttack} / ${
+      chalk.blue("🛡️  Physical Defense")
+    } : ${this.physicalDefense} / ${
+      chalk.green("👟 Speed")
+    } : ${this.speed} / ${chalk.red("❤️  Max HP")} : ${this.maxHP}`;
+  }
+}
