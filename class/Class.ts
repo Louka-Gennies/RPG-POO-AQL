@@ -249,9 +249,11 @@ export class Priest extends Character {
         `${this.name} healed ${allies[target].name} for ${
           allies[target].maxHP - allies[target].currentHP
         } HP`,
+      allies[target].currentHP = allies[target].maxHP,
       );
     } else {
       console.log(`${this.name} healed ${allies[target].name} for ${addHP} HP`);
+      allies[target].currentHP += addHP;
     }
   }
 }
