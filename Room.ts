@@ -5,11 +5,11 @@ import Menu from "./Menu.ts";
 import Item from "./Item.ts";
 
 export default class Room {
-  allies: Character[];
-  enemies: Character[];
-  event: string | null;
-  itemList: Item[];
-  invent: Inventory;
+  private allies: Character[];
+  private enemies: Character[];
+  private event: string | null;
+  private itemList: Item[];
+  private invent: Inventory;
 
   constructor(
     allies: Character[],
@@ -25,7 +25,7 @@ export default class Room {
     this.invent = invent;
   }
 
-  async eventManager(allies: Character[]) {
+  private async eventManager(allies: Character[]) {
     if (this.event === "chest") {
       console.log("You found a chest!");
       const menu = new Menu("Do you want to open it?", ["Yes", "No"]);
@@ -111,7 +111,7 @@ export default class Room {
     }
   }
 
-  async enterRoom(invent: Inventory): Promise<boolean> {
+  public async enterRoom(invent: Inventory): Promise<boolean> {
     const rommfight = new Fight(this.allies, this.enemies);
     const winOrLoose = await rommfight.fight(invent);
     let quit = false;

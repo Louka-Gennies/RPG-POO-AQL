@@ -15,16 +15,16 @@ export class Warrior extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  specialAttack(enemies: Character[]): void {
+  public specialAttack(enemies: Character[]): void {
     console.log("The warrior don't have a special attack, he just attack");
     this.attack(enemies);
   }
 }
 
 export class Mage extends Character {
-  magicAttack: number;
-  maxMana: number;
-  currentMana: number;
+  private magicAttack: number;
+  private maxMana: number;
+  private currentMana: number;
 
   constructor(
     physicalAttack: number,
@@ -43,7 +43,7 @@ export class Mage extends Character {
     this.currentMana = currentMana;
   }
 
-  showHp(): string {
+  public showHp(): string {
     const totalBars = 20;
     const hpPerBar = this.maxHP / totalBars;
     const filledBars = Math.round(this.currentHP / hpPerBar);
@@ -84,7 +84,7 @@ export class Mage extends Character {
     return `${hpBar} / ${manaBar}`;
   }
 
-  specialAttack(enemies: Character[]): void {
+  public specialAttack(enemies: Character[]): void {
     this.currentMana -= 5;
     const phyAtk = this.physicalAttack;
     const enemyNames = enemies.map((enemy) => `${enemy.name}`);
@@ -115,7 +115,7 @@ export class Mage extends Character {
     }
   }
 
-  rechargeMana(ManaPrcnt: number): void {
+  public rechargeMana(ManaPrcnt: number): void {
     const addMana = (this.maxMana / 100) * ManaPrcnt;
     const mana = this.currentMana + addMana;
     if (mana > this.maxMana) {
@@ -129,7 +129,7 @@ export class Mage extends Character {
     }
   }
 
-  fullStats(): string {
+  public fullStats(): string {
     return `${chalk.cyan(this.name)} :\n${
       chalk.yellow("⚔️  Physical Attack")
     } : ${this.physicalAttack} / ${
@@ -156,7 +156,7 @@ export class Paladin extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  specialAttack(enemies: Character[]): void {
+  public specialAttack(enemies: Character[]): void {
     let totalAtk = 0;
     const phyAtk = this.physicalAttack;
     for (let i = enemies.length - 1; i >= 0; i--) {
@@ -191,7 +191,7 @@ export class Barbarian extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  specialAttack(enemies: Character[]): void {
+  public specialAttack(enemies: Character[]): void {
     const phyAtk = this.physicalAttack;
     const enemyNames = enemies.map((enemy) => `${enemy.name}`);
     const menu = new Menu("Choose a target: ", enemyNames);
@@ -238,7 +238,7 @@ export class Priest extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  specialAttack(allies: Character[]): void {
+  public specialAttack(allies: Character[]): void {
     const alliesName = allies.map((allie) => `${allie.name}`);
     const menu = new Menu("Choose a target: ", alliesName);
     const target = menu.askQuestion();
@@ -268,7 +268,7 @@ export class Thief extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  specialAttack(enemies: Character[], invent: Inventory): void {
+  public specialAttack(enemies: Character[], invent: Inventory): void {
     const item = Math.random() * 10;
     if (item <= 5) {
       console.log("You stole a potion");
@@ -317,7 +317,7 @@ export class Monster extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  attack(enemies: Character[]): void {
+  public attack(enemies: Character[]): void {
     let targetIndex;
     const phyAtk = this.physicalAttack;
     if (Math.random() < 0.8) {
@@ -377,7 +377,7 @@ export class Boss extends Character {
     super(name, physicalAttack, physicalDefense, speed, maxHP, currentHP);
   }
 
-  attack(enemies: Character[]): void {
+  public attack(enemies: Character[]): void {
     let targetIndex;
     const phyAtk = this.physicalAttack;
     if (Math.random() < 0.7) {

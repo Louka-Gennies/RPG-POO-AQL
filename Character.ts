@@ -3,13 +3,13 @@ import Menu from "./Menu.ts";
 import Inventory from "./Inventory.ts";
 
 export default class Character {
-  name: string;
-  physicalAttack: number;
-  physicalDefense: number;
-  speed: number;
-  maxHP: number;
-  currentHP: number;
-  active: boolean = false;
+  public name: string;
+  public physicalAttack: number;
+  public physicalDefense: number;
+  public speed: number;
+  public maxHP: number;
+  public currentHP: number;
+  public active: boolean = false;
 
   constructor(
     name: string,
@@ -27,7 +27,7 @@ export default class Character {
     this.currentHP = currentHP;
   }
 
-  attack(enemies: Character[]): void {
+  public attack(enemies: Character[]): void {
     const phyAtk = this.physicalAttack;
     const enemyNames = enemies.map((enemy) => enemy.showHp() + "\n");
     console.clear();
@@ -57,12 +57,12 @@ export default class Character {
     }
   }
 
-  maxChar(a: string): number {
+  private maxChar(a: string): number {
     const noColor = a.replace(/\x1b\[[0-9;]*m/g, "");
     return noColor.length;
   }
 
-  stats(allies: Character[], monsters: Character[]) {
+  public stats(allies: Character[], monsters: Character[]) {
     let maxLineLen = 0;
     const spacing = 10;
     for (let i = 0; i < allies.length; i++) {
@@ -92,11 +92,11 @@ export default class Character {
     }
   }
 
-  specialAttack(enemies: Character[] | null, invent: Inventory | null): void {
+  public specialAttack(enemies: Character[] | null, invent: Inventory | null): void {
     console.log("Special Attack");
   }
 
-  heal(prcntHP: number): number {
+  public heal(prcntHP: number): number {
     const addHP = (this.maxHP / 100) * prcntHP;
     const health = this.currentHP + addHP;
     if (health > this.maxHP) {
@@ -108,19 +108,19 @@ export default class Character {
     }
   }
 
-  res(prcntHP: number): number {
+  public res(prcntHP: number): number {
     let choices: string[] = [];
     this.currentHP = (this.maxHP / 100) * prcntHP;
     return this.currentHP;
   }
 
-  actionMenu(): number {
+  public actionMenu(): number {
     const choices = ["Attack", "Special Attack", "Use Item"];
     const menu = new Menu("Choose an action: ", choices);
     return menu.askQuestion();
   }
 
-  async ItemMenu(invent: Inventory): Promise<number> {
+  public async ItemMenu(invent: Inventory): Promise<number> {
     const choices: string[] = [];
     for (let i = 0; i < invent.items.length; i++) {
       choices.push(invent.items[i].name + " x " + invent.items[i].quantity);
@@ -138,7 +138,7 @@ export default class Character {
     }
   }
 
-  showHp(): string {
+  public showHp(): string {
     const totalBars = 20;
     const hpPerBar = this.maxHP / totalBars;
     let filledBars = totalBars;
@@ -171,7 +171,7 @@ export default class Character {
     return `${hpBar}`;
   }
 
-  fullStats(): string {
+  public fullStats(): string {
     return `${chalk.cyan(this.name)} :\n${
       chalk.yellow("⚔️  Physical Attack")
     } : ${this.physicalAttack} / ${

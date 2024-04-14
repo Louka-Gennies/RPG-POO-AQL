@@ -5,10 +5,10 @@ import Inventory from "./Inventory.ts";
 import Menu from "./Menu.ts";
 
 export default class Fight {
-  team1: Character[];
-  team2: Character[];
-  order: Character[];
-  isFinished: boolean = false;
+  private team1: Character[];
+  private team2: Character[];
+  private order: Character[];
+  private isFinished: boolean = false;
 
   constructor(team1: Character[], team2: Character[]) {
     this.team1 = team1;
@@ -16,13 +16,13 @@ export default class Fight {
     this.order = this.calculateOrder(team1, team2);
   }
 
-  calculateOrder(team1: Character[], team2: Character[]) {
+  private calculateOrder(team1: Character[], team2: Character[]) {
     const order = team1.concat(team2);
     order.sort((a, b) => b.speed - a.speed);
     return order;
   }
 
-  isAlive(char: Character) {
+  private isAlive(char: Character) {
     if (char.currentHP <= 0) {
       return false;
     } else {
@@ -30,20 +30,20 @@ export default class Fight {
     }
   }
 
-  team1Win(team1: Character[], team2: Character[]) {
+  private team1Win(team1: Character[], team2: Character[]) {
     return team1.length > 0 && team2.length === 0;
   }
 
-  team2Win(team1: Character[], team2: Character[]) {
+  private team2Win(team1: Character[], team2: Character[]) {
     return team1.length === 0 && team2.length > 0;
   }
 
-  characterDeath(character: Character, team: Character[]) {
+  private characterDeath(character: Character, team: Character[]) {
     const index = team.indexOf(character);
     team.splice(index, 1);
   }
 
-  async ItemManager(character: Character, invent: Inventory) {
+  private async ItemManager(character: Character, invent: Inventory) {
     console.clear();
     const item = await character.ItemMenu(invent);
     switch (item) {
@@ -134,7 +134,7 @@ export default class Fight {
     }
   }
 
-  async ActionManager(
+  private async ActionManager(
     character: Character,
     team: Character[],
     invent: Inventory,
@@ -160,7 +160,7 @@ export default class Fight {
     }
   }
 
-  async fight(invent: Inventory): Promise<boolean> {
+  public async fight(invent: Inventory): Promise<boolean> {
     const team1Print = this.team1;
     const team2Print = this.team2;
     let alliesWin: boolean = false;

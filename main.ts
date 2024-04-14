@@ -18,7 +18,7 @@ class gameManager {
     console.log("Game Manager Created");
   }
 
-  async CharacterMenu(): Promise<Character[]> {
+  private async CharacterMenu(): Promise<Character[]> {
     const warrior = new Warrior(10, 5, 5, 100, 100); // high attack and defense, no special attack, average speed
     const mage = new Mage(5, 2, 10, 50, 50, 40, 20, 20); // low physical attack and defense, has mana and magic attack
     const paladin = new Paladin(7, 3, 7, 70, 70); // lower attack than warrior, slightly higher defense, has holy attack
@@ -144,7 +144,7 @@ class gameManager {
     return allies;
   }
 
-  generateMonster() {
+  private generateMonster() {
     const minHealth = 25;
     const maxHealth = 50;
     const minAttack = 5;
@@ -166,7 +166,7 @@ class gameManager {
     return new Monster(attack, defense, speed, health, health);
   }
 
-  generateBoss() {
+  private generateBoss() {
     const minHealth = 75;
     const maxHealth = 100;
     const minAttack = 10;
@@ -188,7 +188,7 @@ class gameManager {
     return new Monster(attack, defense, speed, health, health);
   }
 
-  async startGame() {
+  public  async startGame() {
     console.clear();
     console.log("Game Started");
     await new Promise((r) => setTimeout(r, 1000));

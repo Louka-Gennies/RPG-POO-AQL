@@ -1,13 +1,13 @@
 export default class Menu {
-  question: string;
-  possibilities: string[];
+  private question: string;
+  private possibilities: string[];
 
   constructor(question: string, possibilities: string[]) {
     this.question = question;
     this.possibilities = possibilities;
   }
 
-  askQuestion(): number {
+  public askQuestion(): number {
     let question = this.question + "\n";
     for (let i = 0; i < this.possibilities.length; i++) {
       question += `${i + 1}. ${this.possibilities[i]}\n`;
